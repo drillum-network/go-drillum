@@ -1,20 +1,20 @@
-// Copyright 2019 The go-ethereum Authors
-// This file is part of the go-ethereum library.
+// Copyright 2019 The go-drillum Authors
+// This file is part of the go-drillum library.
 //
-// The go-ethereum library is free software: you can redistribute it and/or modify
+// The go-drillum library is free software: you can redistribute it and/or modify
 // it under the terms of the GNU Lesser General Public License as published by
 // the Free Software Foundation, either version 3 of the License, or
 // (at your option) any later version.
 //
-// The go-ethereum library is distributed in the hope that it will be useful,
+// The go-drillum library is distributed in the hope that it will be useful,
 // but WITHOUT ANY WARRANTY; without even the implied warranty of
 // MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
 // GNU Lesser General Public License for more details.
 //
 // You should have received a copy of the GNU Lesser General Public License
-// along with the go-ethereum library. If not, see <http://www.gnu.org/licenses/>.
+// along with the go-drillum library. If not, see <http://www.gnu.org/licenses/>.
 
-// Package les implements the Light Ethereum Subprotocol.
+// Package les implements the Light Drillum Subprotocol.
 package les
 
 import (
@@ -22,35 +22,35 @@ import (
 	"strings"
 	"time"
 
-	"github.com/ethereum/go-ethereum/accounts"
-	"github.com/ethereum/go-ethereum/common"
-	"github.com/ethereum/go-ethereum/common/hexutil"
-	"github.com/ethereum/go-ethereum/common/mclock"
-	"github.com/ethereum/go-ethereum/consensus"
-	"github.com/ethereum/go-ethereum/core"
-	"github.com/ethereum/go-ethereum/core/bloombits"
-	"github.com/ethereum/go-ethereum/core/rawdb"
-	"github.com/ethereum/go-ethereum/core/types"
-	"github.com/ethereum/go-ethereum/eth/ethconfig"
-	"github.com/ethereum/go-ethereum/eth/gasprice"
-	"github.com/ethereum/go-ethereum/event"
-	"github.com/ethereum/go-ethereum/internal/ethapi"
-	"github.com/ethereum/go-ethereum/internal/shutdowncheck"
-	"github.com/ethereum/go-ethereum/les/downloader"
-	"github.com/ethereum/go-ethereum/les/vflux"
-	vfc "github.com/ethereum/go-ethereum/les/vflux/client"
-	"github.com/ethereum/go-ethereum/light"
-	"github.com/ethereum/go-ethereum/log"
-	"github.com/ethereum/go-ethereum/node"
-	"github.com/ethereum/go-ethereum/p2p"
-	"github.com/ethereum/go-ethereum/p2p/enode"
-	"github.com/ethereum/go-ethereum/p2p/enr"
-	"github.com/ethereum/go-ethereum/params"
-	"github.com/ethereum/go-ethereum/rlp"
-	"github.com/ethereum/go-ethereum/rpc"
+	"github.com/drillum-network/go-drillum/accounts"
+	"github.com/drillum-network/go-drillum/common"
+	"github.com/drillum-network/go-drillum/common/hexutil"
+	"github.com/drillum-network/go-drillum/common/mclock"
+	"github.com/drillum-network/go-drillum/consensus"
+	"github.com/drillum-network/go-drillum/core"
+	"github.com/drillum-network/go-drillum/core/bloombits"
+	"github.com/drillum-network/go-drillum/core/rawdb"
+	"github.com/drillum-network/go-drillum/core/types"
+	"github.com/drillum-network/go-drillum/eth/ethconfig"
+	"github.com/drillum-network/go-drillum/eth/gasprice"
+	"github.com/drillum-network/go-drillum/event"
+	"github.com/drillum-network/go-drillum/internal/ethapi"
+	"github.com/drillum-network/go-drillum/internal/shutdowncheck"
+	"github.com/drillum-network/go-drillum/les/downloader"
+	"github.com/drillum-network/go-drillum/les/vflux"
+	vfc "github.com/drillum-network/go-drillum/les/vflux/client"
+	"github.com/drillum-network/go-drillum/light"
+	"github.com/drillum-network/go-drillum/log"
+	"github.com/drillum-network/go-drillum/node"
+	"github.com/drillum-network/go-drillum/p2p"
+	"github.com/drillum-network/go-drillum/p2p/enode"
+	"github.com/drillum-network/go-drillum/p2p/enr"
+	"github.com/drillum-network/go-drillum/params"
+	"github.com/drillum-network/go-drillum/rlp"
+	"github.com/drillum-network/go-drillum/rpc"
 )
 
-type LightEthereum struct {
+type LightDrillum struct {
 	lesCommons
 
 	peers              *serverPeerSet
@@ -83,7 +83,7 @@ type LightEthereum struct {
 }
 
 // New creates an instance of the light client.
-func New(stack *node.Node, config *ethconfig.Config) (*LightEthereum, error) {
+func New(stack *node.Node, config *ethconfig.Config) (*LightDrillum, error) {
 	chainDb, err := stack.OpenDatabase("lightchaindata", config.DatabaseCache, config.DatabaseHandles, "eth/db/chaindata/", false)
 	if err != nil {
 		return nil, err
@@ -106,7 +106,7 @@ func New(stack *node.Node, config *ethconfig.Config) (*LightEthereum, error) {
 
 	peers := newServerPeerSet()
 	merger := consensus.NewMerger(chainDb)
-	leth := &LightEthereum{
+	leth := &LightDrillum{
 		lesCommons: lesCommons{
 			genesis:     genesisHash,
 			config:      config,
@@ -202,7 +202,7 @@ func New(stack *node.Node, config *ethconfig.Config) (*LightEthereum, error) {
 }
 
 // VfluxRequest sends a batch of requests to the given node through discv5 UDP TalkRequest and returns the responses
-func (s *LightEthereum) VfluxRequest(n *enode.Node, reqs vflux.Requests) vflux.Replies {
+func (s *LightDrillum) VfluxRequest(n *enode.Node, reqs vflux.Requests) vflux.Replies {
 	if !s.udpEnabled {
 		return nil
 	}
@@ -217,7 +217,7 @@ func (s *LightEthereum) VfluxRequest(n *enode.Node, reqs vflux.Requests) vflux.R
 
 // vfxVersion returns the version number of the "les" service subdomain of the vflux UDP
 // service, as advertised in the ENR record
-func (s *LightEthereum) vfxVersion(n *enode.Node) uint {
+func (s *LightDrillum) vfxVersion(n *enode.Node) uint {
 	if n.Seq() == 0 {
 		var err error
 		if !s.udpEnabled {
@@ -241,7 +241,7 @@ func (s *LightEthereum) vfxVersion(n *enode.Node) uint {
 
 // prenegQuery sends a capacity query to the given server node to determine whether
 // a connection slot is immediately available
-func (s *LightEthereum) prenegQuery(n *enode.Node) int {
+func (s *LightDrillum) prenegQuery(n *enode.Node) int {
 	if s.vfxVersion(n) < 1 {
 		// UDP query not supported, always try TCP connection
 		return 1
@@ -285,9 +285,9 @@ func (s *LightDummyAPI) Mining() bool {
 	return false
 }
 
-// APIs returns the collection of RPC services the ethereum package offers.
+// APIs returns the collection of RPC services the drillum package offers.
 // NOTE, some of these services probably need to be moved to somewhere else.
-func (s *LightEthereum) APIs() []rpc.API {
+func (s *LightDrillum) APIs() []rpc.API {
 	apis := ethapi.GetAPIs(s.ApiBackend)
 	apis = append(apis, s.engine.APIs(s.BlockChain().HeaderChain())...)
 	return append(apis, []rpc.API{
@@ -310,20 +310,20 @@ func (s *LightEthereum) APIs() []rpc.API {
 	}...)
 }
 
-func (s *LightEthereum) ResetWithGenesisBlock(gb *types.Block) {
+func (s *LightDrillum) ResetWithGenesisBlock(gb *types.Block) {
 	s.blockchain.ResetWithGenesisBlock(gb)
 }
 
-func (s *LightEthereum) BlockChain() *light.LightChain      { return s.blockchain }
-func (s *LightEthereum) TxPool() *light.TxPool              { return s.txPool }
-func (s *LightEthereum) Engine() consensus.Engine           { return s.engine }
-func (s *LightEthereum) LesVersion() int                    { return int(ClientProtocolVersions[0]) }
-func (s *LightEthereum) Downloader() *downloader.Downloader { return s.handler.downloader }
-func (s *LightEthereum) EventMux() *event.TypeMux           { return s.eventMux }
-func (s *LightEthereum) Merger() *consensus.Merger          { return s.merger }
+func (s *LightDrillum) BlockChain() *light.LightChain      { return s.blockchain }
+func (s *LightDrillum) TxPool() *light.TxPool              { return s.txPool }
+func (s *LightDrillum) Engine() consensus.Engine           { return s.engine }
+func (s *LightDrillum) LesVersion() int                    { return int(ClientProtocolVersions[0]) }
+func (s *LightDrillum) Downloader() *downloader.Downloader { return s.handler.downloader }
+func (s *LightDrillum) EventMux() *event.TypeMux           { return s.eventMux }
+func (s *LightDrillum) Merger() *consensus.Merger          { return s.merger }
 
 // Protocols returns all the currently configured network protocols to start.
-func (s *LightEthereum) Protocols() []p2p.Protocol {
+func (s *LightDrillum) Protocols() []p2p.Protocol {
 	return s.makeProtocols(ClientProtocolVersions, s.handler.runPeer, func(id enode.ID) interface{} {
 		if p := s.peers.peer(id.String()); p != nil {
 			return p.Info()
@@ -333,8 +333,8 @@ func (s *LightEthereum) Protocols() []p2p.Protocol {
 }
 
 // Start implements node.Lifecycle, starting all internal goroutines needed by the
-// light ethereum protocol implementation.
-func (s *LightEthereum) Start() error {
+// light drillum protocol implementation.
+func (s *LightDrillum) Start() error {
 	log.Warn("Light client mode is an experimental feature")
 
 	// Regularly update shutdown marker
@@ -359,8 +359,8 @@ func (s *LightEthereum) Start() error {
 }
 
 // Stop implements node.Lifecycle, terminating all internal goroutines used by the
-// Ethereum protocol.
-func (s *LightEthereum) Stop() error {
+// Drillum protocol.
+func (s *LightDrillum) Stop() error {
 	close(s.closeCh)
 	s.serverPool.Stop()
 	s.peers.close()
@@ -381,6 +381,6 @@ func (s *LightEthereum) Stop() error {
 	s.chainDb.Close()
 	s.lesDb.Close()
 	s.wg.Wait()
-	log.Info("Light ethereum stopped")
+	log.Info("Light drillum stopped")
 	return nil
 }

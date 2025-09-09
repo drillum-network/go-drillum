@@ -96,17 +96,17 @@ const (
 	MessageType_MessageType_DebugLinkMemory      MessageType = 111
 	MessageType_MessageType_DebugLinkMemoryWrite MessageType = 112
 	MessageType_MessageType_DebugLinkFlashErase  MessageType = 113
-	// Ethereum
-	MessageType_MessageType_EthereumGetPublicKey     MessageType = 450
-	MessageType_MessageType_EthereumPublicKey        MessageType = 451
-	MessageType_MessageType_EthereumGetAddress       MessageType = 56
-	MessageType_MessageType_EthereumAddress          MessageType = 57
-	MessageType_MessageType_EthereumSignTx           MessageType = 58
-	MessageType_MessageType_EthereumTxRequest        MessageType = 59
-	MessageType_MessageType_EthereumTxAck            MessageType = 60
-	MessageType_MessageType_EthereumSignMessage      MessageType = 64
-	MessageType_MessageType_EthereumVerifyMessage    MessageType = 65
-	MessageType_MessageType_EthereumMessageSignature MessageType = 66
+	// Drillum
+	MessageType_MessageType_DrillumGetPublicKey     MessageType = 450
+	MessageType_MessageType_DrillumPublicKey        MessageType = 451
+	MessageType_MessageType_DrillumGetAddress       MessageType = 56
+	MessageType_MessageType_DrillumAddress          MessageType = 57
+	MessageType_MessageType_DrillumSignTx           MessageType = 58
+	MessageType_MessageType_DrillumTxRequest        MessageType = 59
+	MessageType_MessageType_DrillumTxAck            MessageType = 60
+	MessageType_MessageType_DrillumSignMessage      MessageType = 64
+	MessageType_MessageType_DrillumVerifyMessage    MessageType = 65
+	MessageType_MessageType_DrillumMessageSignature MessageType = 66
 	// NEM
 	MessageType_MessageType_NEMGetAddress       MessageType = 67
 	MessageType_MessageType_NEMAddress          MessageType = 68
@@ -306,16 +306,16 @@ var MessageType_name = map[int32]string{
 	111: "MessageType_DebugLinkMemory",
 	112: "MessageType_DebugLinkMemoryWrite",
 	113: "MessageType_DebugLinkFlashErase",
-	450: "MessageType_EthereumGetPublicKey",
-	451: "MessageType_EthereumPublicKey",
-	56:  "MessageType_EthereumGetAddress",
-	57:  "MessageType_EthereumAddress",
-	58:  "MessageType_EthereumSignTx",
-	59:  "MessageType_EthereumTxRequest",
-	60:  "MessageType_EthereumTxAck",
-	64:  "MessageType_EthereumSignMessage",
-	65:  "MessageType_EthereumVerifyMessage",
-	66:  "MessageType_EthereumMessageSignature",
+	450: "MessageType_DrillumGetPublicKey",
+	451: "MessageType_DrillumPublicKey",
+	56:  "MessageType_DrillumGetAddress",
+	57:  "MessageType_DrillumAddress",
+	58:  "MessageType_DrillumSignTx",
+	59:  "MessageType_DrillumTxRequest",
+	60:  "MessageType_DrillumTxAck",
+	64:  "MessageType_DrillumSignMessage",
+	65:  "MessageType_DrillumVerifyMessage",
+	66:  "MessageType_DrillumMessageSignature",
 	67:  "MessageType_NEMGetAddress",
 	68:  "MessageType_NEMAddress",
 	69:  "MessageType_NEMSignTx",
@@ -502,16 +502,16 @@ var MessageType_value = map[string]int32{
 	"MessageType_DebugLinkMemory":                           111,
 	"MessageType_DebugLinkMemoryWrite":                      112,
 	"MessageType_DebugLinkFlashErase":                       113,
-	"MessageType_EthereumGetPublicKey":                      450,
-	"MessageType_EthereumPublicKey":                         451,
-	"MessageType_EthereumGetAddress":                        56,
-	"MessageType_EthereumAddress":                           57,
-	"MessageType_EthereumSignTx":                            58,
-	"MessageType_EthereumTxRequest":                         59,
-	"MessageType_EthereumTxAck":                             60,
-	"MessageType_EthereumSignMessage":                       64,
-	"MessageType_EthereumVerifyMessage":                     65,
-	"MessageType_EthereumMessageSignature":                  66,
+	"MessageType_DrillumGetPublicKey":                      450,
+	"MessageType_DrillumPublicKey":                         451,
+	"MessageType_DrillumGetAddress":                        56,
+	"MessageType_DrillumAddress":                           57,
+	"MessageType_DrillumSignTx":                            58,
+	"MessageType_DrillumTxRequest":                         59,
+	"MessageType_DrillumTxAck":                             60,
+	"MessageType_DrillumSignMessage":                       64,
+	"MessageType_DrillumVerifyMessage":                     65,
+	"MessageType_DrillumMessageSignature":                  66,
 	"MessageType_NEMGetAddress":                             67,
 	"MessageType_NEMAddress":                                68,
 	"MessageType_NEMSignTx":                                 69,

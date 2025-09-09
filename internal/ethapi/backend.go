@@ -1,20 +1,20 @@
-// Copyright 2015 The go-ethereum Authors
-// This file is part of the go-ethereum library.
+// Copyright 2015 The go-drillum Authors
+// This file is part of the go-drillum library.
 //
-// The go-ethereum library is free software: you can redistribute it and/or modify
+// The go-drillum library is free software: you can redistribute it and/or modify
 // it under the terms of the GNU Lesser General Public License as published by
 // the Free Software Foundation, either version 3 of the License, or
 // (at your option) any later version.
 //
-// The go-ethereum library is distributed in the hope that it will be useful,
+// The go-drillum library is distributed in the hope that it will be useful,
 // but WITHOUT ANY WARRANTY; without even the implied warranty of
 // MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
 // GNU Lesser General Public License for more details.
 //
 // You should have received a copy of the GNU Lesser General Public License
-// along with the go-ethereum library. If not, see <http://www.gnu.org/licenses/>.
+// along with the go-drillum library. If not, see <http://www.gnu.org/licenses/>.
 
-// Package ethapi implements the general Ethereum API functions.
+// Package ethapi implements the general Drillum API functions.
 package ethapi
 
 import (
@@ -22,26 +22,26 @@ import (
 	"math/big"
 	"time"
 
-	"github.com/ethereum/go-ethereum"
-	"github.com/ethereum/go-ethereum/accounts"
-	"github.com/ethereum/go-ethereum/common"
-	"github.com/ethereum/go-ethereum/consensus"
-	"github.com/ethereum/go-ethereum/core"
-	"github.com/ethereum/go-ethereum/core/state"
-	"github.com/ethereum/go-ethereum/core/types"
-	"github.com/ethereum/go-ethereum/core/vm"
-	"github.com/ethereum/go-ethereum/eth/filters"
-	"github.com/ethereum/go-ethereum/ethdb"
-	"github.com/ethereum/go-ethereum/event"
-	"github.com/ethereum/go-ethereum/params"
-	"github.com/ethereum/go-ethereum/rpc"
+	"github.com/drillum-network/go-drillum"
+	"github.com/drillum-network/go-drillum/accounts"
+	"github.com/drillum-network/go-drillum/common"
+	"github.com/drillum-network/go-drillum/consensus"
+	"github.com/drillum-network/go-drillum/core"
+	"github.com/drillum-network/go-drillum/core/state"
+	"github.com/drillum-network/go-drillum/core/types"
+	"github.com/drillum-network/go-drillum/core/vm"
+	"github.com/drillum-network/go-drillum/eth/filters"
+	"github.com/drillum-network/go-drillum/ethdb"
+	"github.com/drillum-network/go-drillum/event"
+	"github.com/drillum-network/go-drillum/params"
+	"github.com/drillum-network/go-drillum/rpc"
 )
 
 // Backend interface provides the common API services (that are provided by
 // both full and light clients) with access to necessary functions.
 type Backend interface {
-	// General Ethereum API
-	SyncProgress() ethereum.SyncProgress
+	// General Drillum API
+	SyncProgress() drillum.SyncProgress
 
 	SuggestGasTipCap(ctx context.Context) (*big.Int, error)
 	FeeHistory(ctx context.Context, blockCount int, lastBlock rpc.BlockNumber, rewardPercentiles []float64) (*big.Int, [][]*big.Int, []*big.Int, []float64, error)
@@ -97,7 +97,7 @@ func GetAPIs(apiBackend Backend) []rpc.API {
 	return []rpc.API{
 		{
 			Namespace: "eth",
-			Service:   NewEthereumAPI(apiBackend),
+			Service:   NewDrillumAPI(apiBackend),
 		}, {
 			Namespace: "eth",
 			Service:   NewBlockChainAPI(apiBackend),
@@ -112,7 +112,7 @@ func GetAPIs(apiBackend Backend) []rpc.API {
 			Service:   NewDebugAPI(apiBackend),
 		}, {
 			Namespace: "eth",
-			Service:   NewEthereumAccountAPI(apiBackend.AccountManager()),
+			Service:   NewDrillumAccountAPI(apiBackend.AccountManager()),
 		}, {
 			Namespace: "personal",
 			Service:   NewPersonalAccountAPI(apiBackend, nonceLock),

@@ -1,18 +1,18 @@
-// Copyright 2015 The go-ethereum Authors
-// This file is part of the go-ethereum library.
+// Copyright 2015 The go-drillum Authors
+// This file is part of the go-drillum library.
 //
-// The go-ethereum library is free software: you can redistribute it and/or modify
+// The go-drillum library is free software: you can redistribute it and/or modify
 // it under the terms of the GNU Lesser General Public License as published by
 // the Free Software Foundation, either version 3 of the License, or
 // (at your option) any later version.
 //
-// The go-ethereum library is distributed in the hope that it will be useful,
+// The go-drillum library is distributed in the hope that it will be useful,
 // but WITHOUT ANY WARRANTY; without even the implied warranty of
 // MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
 // GNU Lesser General Public License for more details.
 //
 // You should have received a copy of the GNU Lesser General Public License
-// along with the go-ethereum library. If not, see <http://www.gnu.org/licenses/>.
+// along with the go-drillum library. If not, see <http://www.gnu.org/licenses/>.
 
 package ethapi
 
@@ -25,41 +25,41 @@ import (
 	"time"
 
 	"github.com/davecgh/go-spew/spew"
-	"github.com/ethereum/go-ethereum/accounts"
-	"github.com/ethereum/go-ethereum/accounts/abi"
-	"github.com/ethereum/go-ethereum/accounts/keystore"
-	"github.com/ethereum/go-ethereum/accounts/scwallet"
-	"github.com/ethereum/go-ethereum/common"
-	"github.com/ethereum/go-ethereum/common/hexutil"
-	"github.com/ethereum/go-ethereum/common/math"
-	"github.com/ethereum/go-ethereum/consensus/ethash"
-	"github.com/ethereum/go-ethereum/consensus/misc"
-	"github.com/ethereum/go-ethereum/core"
-	"github.com/ethereum/go-ethereum/core/state"
-	"github.com/ethereum/go-ethereum/core/types"
-	"github.com/ethereum/go-ethereum/core/vm"
-	"github.com/ethereum/go-ethereum/crypto"
-	"github.com/ethereum/go-ethereum/eth/tracers/logger"
-	"github.com/ethereum/go-ethereum/log"
-	"github.com/ethereum/go-ethereum/p2p"
-	"github.com/ethereum/go-ethereum/params"
-	"github.com/ethereum/go-ethereum/rlp"
-	"github.com/ethereum/go-ethereum/rpc"
+	"github.com/drillum-network/go-drillum/accounts"
+	"github.com/drillum-network/go-drillum/accounts/abi"
+	"github.com/drillum-network/go-drillum/accounts/keystore"
+	"github.com/drillum-network/go-drillum/accounts/scwallet"
+	"github.com/drillum-network/go-drillum/common"
+	"github.com/drillum-network/go-drillum/common/hexutil"
+	"github.com/drillum-network/go-drillum/common/math"
+	"github.com/drillum-network/go-drillum/consensus/ethash"
+	"github.com/drillum-network/go-drillum/consensus/misc"
+	"github.com/drillum-network/go-drillum/core"
+	"github.com/drillum-network/go-drillum/core/state"
+	"github.com/drillum-network/go-drillum/core/types"
+	"github.com/drillum-network/go-drillum/core/vm"
+	"github.com/drillum-network/go-drillum/crypto"
+	"github.com/drillum-network/go-drillum/eth/tracers/logger"
+	"github.com/drillum-network/go-drillum/log"
+	"github.com/drillum-network/go-drillum/p2p"
+	"github.com/drillum-network/go-drillum/params"
+	"github.com/drillum-network/go-drillum/rlp"
+	"github.com/drillum-network/go-drillum/rpc"
 	"github.com/tyler-smith/go-bip39"
 )
 
-// EthereumAPI provides an API to access Ethereum related information.
-type EthereumAPI struct {
+// DrillumAPI provides an API to access Drillum related information.
+type DrillumAPI struct {
 	b Backend
 }
 
-// NewEthereumAPI creates a new Ethereum protocol API.
-func NewEthereumAPI(b Backend) *EthereumAPI {
-	return &EthereumAPI{b}
+// NewDrillumAPI creates a new Drillum protocol API.
+func NewDrillumAPI(b Backend) *DrillumAPI {
+	return &DrillumAPI{b}
 }
 
 // GasPrice returns a suggestion for a gas price for legacy transactions.
-func (s *EthereumAPI) GasPrice(ctx context.Context) (*hexutil.Big, error) {
+func (s *DrillumAPI) GasPrice(ctx context.Context) (*hexutil.Big, error) {
 	tipcap, err := s.b.SuggestGasTipCap(ctx)
 	if err != nil {
 		return nil, err
@@ -71,7 +71,7 @@ func (s *EthereumAPI) GasPrice(ctx context.Context) (*hexutil.Big, error) {
 }
 
 // MaxPriorityFeePerGas returns a suggestion for a gas tip cap for dynamic fee transactions.
-func (s *EthereumAPI) MaxPriorityFeePerGas(ctx context.Context) (*hexutil.Big, error) {
+func (s *DrillumAPI) MaxPriorityFeePerGas(ctx context.Context) (*hexutil.Big, error) {
 	tipcap, err := s.b.SuggestGasTipCap(ctx)
 	if err != nil {
 		return nil, err
@@ -87,7 +87,7 @@ type feeHistoryResult struct {
 }
 
 // FeeHistory returns the fee market history.
-func (s *EthereumAPI) FeeHistory(ctx context.Context, blockCount rpc.DecimalOrHex, lastBlock rpc.BlockNumber, rewardPercentiles []float64) (*feeHistoryResult, error) {
+func (s *DrillumAPI) FeeHistory(ctx context.Context, blockCount rpc.DecimalOrHex, lastBlock rpc.BlockNumber, rewardPercentiles []float64) (*feeHistoryResult, error) {
 	oldest, reward, baseFee, gasUsed, err := s.b.FeeHistory(ctx, int(blockCount), lastBlock, rewardPercentiles)
 	if err != nil {
 		return nil, err
@@ -121,7 +121,7 @@ func (s *EthereumAPI) FeeHistory(ctx context.Context, blockCount rpc.DecimalOrHe
 // - highestBlock:  block number of the highest block header this node has received from peers
 // - pulledStates:  number of state entries processed until now
 // - knownStates:   number of known state entries that still need to be pulled
-func (s *EthereumAPI) Syncing() (interface{}, error) {
+func (s *DrillumAPI) Syncing() (interface{}, error) {
 	progress := s.b.SyncProgress()
 
 	// Return not syncing if the synchronisation already completed
@@ -252,19 +252,19 @@ func (s *TxPoolAPI) Inspect() map[string]map[string]map[string]string {
 	return content
 }
 
-// EthereumAccountAPI provides an API to access accounts managed by this node.
+// DrillumAccountAPI provides an API to access accounts managed by this node.
 // It offers only methods that can retrieve accounts.
-type EthereumAccountAPI struct {
+type DrillumAccountAPI struct {
 	am *accounts.Manager
 }
 
-// NewEthereumAccountAPI creates a new EthereumAccountAPI.
-func NewEthereumAccountAPI(am *accounts.Manager) *EthereumAccountAPI {
-	return &EthereumAccountAPI{am: am}
+// NewDrillumAccountAPI creates a new DrillumAccountAPI.
+func NewDrillumAccountAPI(am *accounts.Manager) *DrillumAccountAPI {
+	return &DrillumAccountAPI{am: am}
 }
 
 // Accounts returns the collection of accounts this node manages.
-func (s *EthereumAccountAPI) Accounts() []common.Address {
+func (s *DrillumAccountAPI) Accounts() []common.Address {
 	return s.am.Accounts()
 }
 
@@ -504,15 +504,15 @@ func (s *PersonalAccountAPI) SignTransaction(ctx context.Context, args Transacti
 	return &SignTransactionResult{data, signed}, nil
 }
 
-// Sign calculates an Ethereum ECDSA signature for:
-// keccak256("\x19Ethereum Signed Message:\n" + len(message) + message))
+// Sign calculates an Drillum ECDSA signature for:
+// keccak256("\x19Drillum Signed Message:\n" + len(message) + message))
 //
 // Note, the produced signature conforms to the secp256k1 curve R, S and V values,
 // where the V value will be 27 or 28 for legacy reasons.
 //
 // The key used to calculate the signature is decrypted with the given password.
 //
-// https://github.com/ethereum/go-ethereum/wiki/Management-APIs#personal_sign
+// https://github.com/drillum-network/go-drillum/wiki/Management-APIs#personal_sign
 func (s *PersonalAccountAPI) Sign(ctx context.Context, data hexutil.Bytes, addr common.Address, passwd string) (hexutil.Bytes, error) {
 	// Look up the wallet containing the requested signer
 	account := accounts.Account{Address: addr}
@@ -534,19 +534,19 @@ func (s *PersonalAccountAPI) Sign(ctx context.Context, data hexutil.Bytes, addr 
 // EcRecover returns the address for the account that was used to create the signature.
 // Note, this function is compatible with eth_sign and personal_sign. As such it recovers
 // the address of:
-// hash = keccak256("\x19Ethereum Signed Message:\n"${message length}${message})
+// hash = keccak256("\x19Drillum Signed Message:\n"${message length}${message})
 // addr = ecrecover(hash, signature)
 //
 // Note, the signature must conform to the secp256k1 curve R, S and V values, where
 // the V value must be 27 or 28 for legacy reasons.
 //
-// https://github.com/ethereum/go-ethereum/wiki/Management-APIs#personal_ecRecover
+// https://github.com/drillum-network/go-drillum/wiki/Management-APIs#personal_ecRecover
 func (s *PersonalAccountAPI) EcRecover(ctx context.Context, data, sig hexutil.Bytes) (common.Address, error) {
 	if len(sig) != crypto.SignatureLength {
 		return common.Address{}, fmt.Errorf("signature must be %d bytes long", crypto.SignatureLength)
 	}
 	if sig[crypto.RecoveryIDOffset] != 27 && sig[crypto.RecoveryIDOffset] != 28 {
-		return common.Address{}, fmt.Errorf("invalid Ethereum signature (V is not 27 or 28)")
+		return common.Address{}, fmt.Errorf("invalid Drillum signature (V is not 27 or 28)")
 	}
 	sig[crypto.RecoveryIDOffset] -= 27 // Transform yellow paper V from 27/28 to 0/1
 
@@ -584,7 +584,7 @@ func (s *PersonalAccountAPI) InitializeWallet(ctx context.Context, url string) (
 	}
 }
 
-// Unpair deletes a pairing between wallet and geth.
+// Unpair deletes a pairing between wallet and gdrill.
 func (s *PersonalAccountAPI) Unpair(ctx context.Context, url string, pin string) error {
 	wallet, err := s.am.Wallet(url)
 	if err != nil {
@@ -599,17 +599,17 @@ func (s *PersonalAccountAPI) Unpair(ctx context.Context, url string, pin string)
 	}
 }
 
-// BlockChainAPI provides an API to access Ethereum blockchain data.
+// BlockChainAPI provides an API to access Drillum blockchain data.
 type BlockChainAPI struct {
 	b Backend
 }
 
-// NewBlockChainAPI creates a new Ethereum blockchain API.
+// NewBlockChainAPI creates a new Drillum blockchain API.
 func NewBlockChainAPI(b Backend) *BlockChainAPI {
 	return &BlockChainAPI{b}
 }
 
-// ChainId is the EIP-155 replay-protection chain id for the current Ethereum chain config.
+// ChainId is the EIP-155 replay-protection chain id for the current Drillum chain config.
 //
 // Note, this method does not conform to EIP-695 because the configured chain ID is always
 // returned, regardless of the current head block. We used to return an error when the chain
@@ -996,7 +996,7 @@ type revertError struct {
 }
 
 // ErrorCode returns the JSON error code for a revertal.
-// See: https://github.com/ethereum/wiki/wiki/JSON-RPC-Error-Codes-Improvement-Proposal
+// See: https://github.com/drillum-network/wiki/wiki/JSON-RPC-Error-Codes-Improvement-Proposal
 func (e *revertError) ErrorCode() int {
 	return 3
 }
@@ -1739,14 +1739,14 @@ func (s *TransactionAPI) SendRawTransaction(ctx context.Context, input hexutil.B
 }
 
 // Sign calculates an ECDSA signature for:
-// keccak256("\x19Ethereum Signed Message:\n" + len(message) + message).
+// keccak256("\x19Drillum Signed Message:\n" + len(message) + message).
 //
 // Note, the produced signature conforms to the secp256k1 curve R, S and V values,
 // where the V value will be 27 or 28 for legacy reasons.
 //
 // The account associated with addr must be unlocked.
 //
-// https://github.com/ethereum/wiki/wiki/JSON-RPC#eth_sign
+// https://github.com/drillum-network/wiki/wiki/JSON-RPC#eth_sign
 func (s *TransactionAPI) Sign(addr common.Address, data hexutil.Bytes) (hexutil.Bytes, error) {
 	// Look up the wallet containing the requested signer
 	account := accounts.Account{Address: addr}
@@ -1877,7 +1877,7 @@ func (s *TransactionAPI) Resend(ctx context.Context, sendArgs TransactionArgs, g
 	return common.Hash{}, fmt.Errorf("transaction %#x not found", matchTx.Hash())
 }
 
-// DebugAPI is the collection of Ethereum APIs exposed over the debugging
+// DebugAPI is the collection of Drillum APIs exposed over the debugging
 // namespace.
 type DebugAPI struct {
 	b Backend
@@ -2000,7 +2000,7 @@ func (s *NetAPI) PeerCount() hexutil.Uint {
 	return hexutil.Uint(s.net.PeerCount())
 }
 
-// Version returns the current ethereum protocol version.
+// Version returns the current drillum protocol version.
 func (s *NetAPI) Version() string {
 	return fmt.Sprintf("%d", s.networkVersion)
 }
@@ -2012,10 +2012,10 @@ func checkTxFee(gasPrice *big.Int, gas uint64, cap float64) error {
 	if cap == 0 {
 		return nil
 	}
-	feeEth := new(big.Float).Quo(new(big.Float).SetInt(new(big.Int).Mul(gasPrice, new(big.Int).SetUint64(gas))), new(big.Float).SetInt(big.NewInt(params.Ether)))
+	feeEth := new(big.Float).Quo(new(big.Float).SetInt(new(big.Int).Mul(gasPrice, new(big.Int).SetUint64(gas))), new(big.Float).SetInt(big.NewInt(params.Drill)))
 	feeFloat, _ := feeEth.Float64()
 	if feeFloat > cap {
-		return fmt.Errorf("tx fee (%.2f ether) exceeds the configured cap (%.2f ether)", feeFloat, cap)
+		return fmt.Errorf("tx fee (%.2f drill) exceeds the configured cap (%.2f drill)", feeFloat, cap)
 	}
 	return nil
 }

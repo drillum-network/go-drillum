@@ -1,18 +1,18 @@
-// Copyright 2021 The go-ethereum Authors
-// This file is part of go-ethereum.
+// Copyright 2021 The go-drillum Authors
+// This file is part of go-drillum.
 //
-// go-ethereum is free software: you can redistribute it and/or modify
+// go-drillum is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
 // the Free Software Foundation, either version 3 of the License, or
 // (at your option) any later version.
 //
-// go-ethereum is distributed in the hope that it will be useful,
+// go-drillum is distributed in the hope that it will be useful,
 // but WITHOUT ANY WARRANTY; without even the implied warranty of
 // MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
 // GNU General Public License for more details.
 //
 // You should have received a copy of the GNU General Public License
-// along with go-ethereum. If not, see <http://www.gnu.org/licenses/>.
+// along with go-drillum. If not, see <http://www.gnu.org/licenses/>.
 
 package ethtest
 
@@ -21,11 +21,11 @@ import (
 	"testing"
 	"time"
 
-	"github.com/ethereum/go-ethereum/eth"
-	"github.com/ethereum/go-ethereum/eth/ethconfig"
-	"github.com/ethereum/go-ethereum/internal/utesting"
-	"github.com/ethereum/go-ethereum/node"
-	"github.com/ethereum/go-ethereum/p2p"
+	"github.com/drillum-network/go-drillum/eth"
+	"github.com/drillum-network/go-drillum/eth/ethconfig"
+	"github.com/drillum-network/go-drillum/internal/utesting"
+	"github.com/drillum-network/go-drillum/node"
+	"github.com/drillum-network/go-drillum/p2p"
 )
 
 var (
@@ -35,13 +35,13 @@ var (
 )
 
 func TestEthSuite(t *testing.T) {
-	geth, err := runGeth()
+	gdrill, err := runGdrill()
 	if err != nil {
-		t.Fatalf("could not run geth: %v", err)
+		t.Fatalf("could not run gdrill: %v", err)
 	}
-	defer geth.Close()
+	defer gdrill.Close()
 
-	suite, err := NewSuite(geth.Server().Self(), fullchainFile, genesisFile)
+	suite, err := NewSuite(gdrill.Server().Self(), fullchainFile, genesisFile)
 	if err != nil {
 		t.Fatalf("could not create new test suite: %v", err)
 	}
@@ -56,13 +56,13 @@ func TestEthSuite(t *testing.T) {
 }
 
 func TestSnapSuite(t *testing.T) {
-	geth, err := runGeth()
+	gdrill, err := runGdrill()
 	if err != nil {
-		t.Fatalf("could not run geth: %v", err)
+		t.Fatalf("could not run gdrill: %v", err)
 	}
-	defer geth.Close()
+	defer gdrill.Close()
 
-	suite, err := NewSuite(geth.Server().Self(), fullchainFile, genesisFile)
+	suite, err := NewSuite(gdrill.Server().Self(), fullchainFile, genesisFile)
 	if err != nil {
 		t.Fatalf("could not create new test suite: %v", err)
 	}
@@ -76,8 +76,8 @@ func TestSnapSuite(t *testing.T) {
 	}
 }
 
-// runGeth creates and starts a geth node
-func runGeth() (*node.Node, error) {
+// runGdrill creates and starts a gdrill node
+func runGdrill() (*node.Node, error) {
 	stack, err := node.New(&node.Config{
 		P2P: p2p.Config{
 			ListenAddr:  "127.0.0.1:0",
@@ -90,7 +90,7 @@ func runGeth() (*node.Node, error) {
 		return nil, err
 	}
 
-	err = setupGeth(stack)
+	err = setupGdrill(stack)
 	if err != nil {
 		stack.Close()
 		return nil, err
@@ -102,7 +102,7 @@ func runGeth() (*node.Node, error) {
 	return stack, nil
 }
 
-func setupGeth(stack *node.Node) error {
+func setupGdrill(stack *node.Node) error {
 	chain, err := loadChain(halfchainFile, genesisFile)
 	if err != nil {
 		return err

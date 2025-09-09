@@ -1,18 +1,18 @@
-// Copyright 2020 The go-ethereum Authors
-// This file is part of the go-ethereum library.
+// Copyright 2020 The go-drillum Authors
+// This file is part of the go-drillum library.
 //
-// The go-ethereum library is free software: you can redistribute it and/or modify
+// The go-drillum library is free software: you can redistribute it and/or modify
 // it under the terms of the GNU Lesser General Public License as published by
 // the Free Software Foundation, either version 3 of the License, or
 // (at your option) any later version.
 //
-// The go-ethereum library is distributed in the hope that it will be useful,
+// The go-drillum library is distributed in the hope that it will be useful,
 // but WITHOUT ANY WARRANTY; without even the implied warranty of
 // MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
 // GNU Lesser General Public License for more details.
 //
 // You should have received a copy of the GNU Lesser General Public License
-// along with the go-ethereum library. If not, see <http://www.gnu.org/licenses/>.
+// along with the go-drillum library. If not, see <http://www.gnu.org/licenses/>.
 
 package core
 
@@ -21,17 +21,17 @@ import (
 	"math/big"
 	"testing"
 
-	"github.com/ethereum/go-ethereum/common"
-	"github.com/ethereum/go-ethereum/common/math"
-	"github.com/ethereum/go-ethereum/consensus"
-	"github.com/ethereum/go-ethereum/consensus/ethash"
-	"github.com/ethereum/go-ethereum/consensus/misc"
-	"github.com/ethereum/go-ethereum/core/rawdb"
-	"github.com/ethereum/go-ethereum/core/types"
-	"github.com/ethereum/go-ethereum/core/vm"
-	"github.com/ethereum/go-ethereum/crypto"
-	"github.com/ethereum/go-ethereum/params"
-	"github.com/ethereum/go-ethereum/trie"
+	"github.com/drillum-network/go-drillum/common"
+	"github.com/drillum-network/go-drillum/common/math"
+	"github.com/drillum-network/go-drillum/consensus"
+	"github.com/drillum-network/go-drillum/consensus/ethash"
+	"github.com/drillum-network/go-drillum/consensus/misc"
+	"github.com/drillum-network/go-drillum/core/rawdb"
+	"github.com/drillum-network/go-drillum/core/types"
+	"github.com/drillum-network/go-drillum/core/vm"
+	"github.com/drillum-network/go-drillum/crypto"
+	"github.com/drillum-network/go-drillum/params"
+	"github.com/drillum-network/go-drillum/trie"
 	"golang.org/x/crypto/sha3"
 )
 
@@ -82,11 +82,11 @@ func TestStateProcessorErrors(t *testing.T) {
 				Config: config,
 				Alloc: GenesisAlloc{
 					common.HexToAddress("0x71562b71999873DB5b286dF957af199Ec94617F7"): GenesisAccount{
-						Balance: big.NewInt(1000000000000000000), // 1 ether
+						Balance: big.NewInt(1000000000000000000), // 1 drill
 						Nonce:   0,
 					},
 					common.HexToAddress("0xfd0810DD14796680f72adf1a371963d0745BCc64"): GenesisAccount{
-						Balance: big.NewInt(1000000000000000000), // 1 ether
+						Balance: big.NewInt(1000000000000000000), // 1 drill
 						Nonce:   math.MaxUint64,
 					},
 				},
@@ -227,7 +227,7 @@ func TestStateProcessorErrors(t *testing.T) {
 				},
 				Alloc: GenesisAlloc{
 					common.HexToAddress("0x71562b71999873DB5b286dF957af199Ec94617F7"): GenesisAccount{
-						Balance: big.NewInt(1000000000000000000), // 1 ether
+						Balance: big.NewInt(1000000000000000000), // 1 drill
 						Nonce:   0,
 					},
 				},
@@ -266,7 +266,7 @@ func TestStateProcessorErrors(t *testing.T) {
 				Config: config,
 				Alloc: GenesisAlloc{
 					common.HexToAddress("0x71562b71999873DB5b286dF957af199Ec94617F7"): GenesisAccount{
-						Balance: big.NewInt(1000000000000000000), // 1 ether
+						Balance: big.NewInt(1000000000000000000), // 1 drill
 						Nonce:   0,
 						Code:    common.FromHex("0xB0B0FACE"),
 					},

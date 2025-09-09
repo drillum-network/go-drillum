@@ -1,18 +1,18 @@
-// Copyright 2015 The go-ethereum Authors
-// This file is part of the go-ethereum library.
+// Copyright 2015 The go-drillum Authors
+// This file is part of the go-drillum library.
 //
-// The go-ethereum library is free software: you can redistribute it and/or modify
+// The go-drillum library is free software: you can redistribute it and/or modify
 // it under the terms of the GNU Lesser General Public License as published by
 // the Free Software Foundation, either version 3 of the License, or
 // (at your option) any later version.
 //
-// The go-ethereum library is distributed in the hope that it will be useful,
+// The go-drillum library is distributed in the hope that it will be useful,
 // but WITHOUT ANY WARRANTY; without even the implied warranty of
 // MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
 // GNU Lesser General Public License for more details.
 //
 // You should have received a copy of the GNU Lesser General Public License
-// along with the go-ethereum library. If not, see <http://www.gnu.org/licenses/>.
+// along with the go-drillum library. If not, see <http://www.gnu.org/licenses/>.
 
 package eth
 
@@ -28,56 +28,56 @@ import (
 	"strings"
 	"time"
 
-	"github.com/ethereum/go-ethereum/common"
-	"github.com/ethereum/go-ethereum/common/hexutil"
-	"github.com/ethereum/go-ethereum/core"
-	"github.com/ethereum/go-ethereum/core/rawdb"
-	"github.com/ethereum/go-ethereum/core/state"
-	"github.com/ethereum/go-ethereum/core/types"
-	"github.com/ethereum/go-ethereum/internal/ethapi"
-	"github.com/ethereum/go-ethereum/log"
-	"github.com/ethereum/go-ethereum/rlp"
-	"github.com/ethereum/go-ethereum/rpc"
-	"github.com/ethereum/go-ethereum/trie"
+	"github.com/drillum-network/go-drillum/common"
+	"github.com/drillum-network/go-drillum/common/hexutil"
+	"github.com/drillum-network/go-drillum/core"
+	"github.com/drillum-network/go-drillum/core/rawdb"
+	"github.com/drillum-network/go-drillum/core/state"
+	"github.com/drillum-network/go-drillum/core/types"
+	"github.com/drillum-network/go-drillum/internal/ethapi"
+	"github.com/drillum-network/go-drillum/log"
+	"github.com/drillum-network/go-drillum/rlp"
+	"github.com/drillum-network/go-drillum/rpc"
+	"github.com/drillum-network/go-drillum/trie"
 )
 
-// EthereumAPI provides an API to access Ethereum full node-related information.
-type EthereumAPI struct {
-	e *Ethereum
+// DrillumAPI provides an API to access Drillum full node-related information.
+type DrillumAPI struct {
+	e *Drillum
 }
 
-// NewEthereumAPI creates a new Ethereum protocol API for full nodes.
-func NewEthereumAPI(e *Ethereum) *EthereumAPI {
-	return &EthereumAPI{e}
+// NewDrillumAPI creates a new Drillum protocol API for full nodes.
+func NewDrillumAPI(e *Drillum) *DrillumAPI {
+	return &DrillumAPI{e}
 }
 
 // Etherbase is the address that mining rewards will be send to.
-func (api *EthereumAPI) Etherbase() (common.Address, error) {
+func (api *DrillumAPI) Etherbase() (common.Address, error) {
 	return api.e.Etherbase()
 }
 
 // Coinbase is the address that mining rewards will be send to (alias for Etherbase).
-func (api *EthereumAPI) Coinbase() (common.Address, error) {
+func (api *DrillumAPI) Coinbase() (common.Address, error) {
 	return api.Etherbase()
 }
 
 // Hashrate returns the POW hashrate.
-func (api *EthereumAPI) Hashrate() hexutil.Uint64 {
+func (api *DrillumAPI) Hashrate() hexutil.Uint64 {
 	return hexutil.Uint64(api.e.Miner().Hashrate())
 }
 
 // Mining returns an indication if this node is currently mining.
-func (api *EthereumAPI) Mining() bool {
+func (api *DrillumAPI) Mining() bool {
 	return api.e.IsMining()
 }
 
 // MinerAPI provides an API to control the miner.
 type MinerAPI struct {
-	e *Ethereum
+	e *Drillum
 }
 
 // NewMinerAPI create a new MinerAPI instance.
-func NewMinerAPI(e *Ethereum) *MinerAPI {
+func NewMinerAPI(e *Drillum) *MinerAPI {
 	return &MinerAPI{e}
 }
 
@@ -134,14 +134,14 @@ func (api *MinerAPI) SetRecommitInterval(interval int) {
 	api.e.Miner().SetRecommitInterval(time.Duration(interval) * time.Millisecond)
 }
 
-// AdminAPI is the collection of Ethereum full node related APIs for node
+// AdminAPI is the collection of Drillum full node related APIs for node
 // administration.
 type AdminAPI struct {
-	eth *Ethereum
+	eth *Drillum
 }
 
 // NewAdminAPI creates a new instance of AdminAPI.
-func NewAdminAPI(eth *Ethereum) *AdminAPI {
+func NewAdminAPI(eth *Drillum) *AdminAPI {
 	return &AdminAPI{eth: eth}
 }
 
@@ -243,14 +243,14 @@ func (api *AdminAPI) ImportChain(file string) (bool, error) {
 	return true, nil
 }
 
-// DebugAPI is the collection of Ethereum full node APIs for debugging the
+// DebugAPI is the collection of Drillum full node APIs for debugging the
 // protocol.
 type DebugAPI struct {
-	eth *Ethereum
+	eth *Drillum
 }
 
 // NewDebugAPI creates a new DebugAPI instance.
-func NewDebugAPI(eth *Ethereum) *DebugAPI {
+func NewDebugAPI(eth *Drillum) *DebugAPI {
 	return &DebugAPI{eth: eth}
 }
 

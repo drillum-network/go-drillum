@@ -107,17 +107,17 @@ enum MessageType {
     MessageType_DebugLinkMemoryWrite = 112 [(wire_debug_in) = true];
     MessageType_DebugLinkFlashErase = 113 [(wire_debug_in) = true];
 
-    // Ethereum
-    MessageType_EthereumGetPublicKey = 450 [(wire_in) = true];
-    MessageType_EthereumPublicKey = 451 [(wire_out) = true];
-    MessageType_EthereumGetAddress = 56 [(wire_in) = true];
-    MessageType_EthereumAddress = 57 [(wire_out) = true];
-    MessageType_EthereumSignTx = 58 [(wire_in) = true];
-    MessageType_EthereumTxRequest = 59 [(wire_out) = true];
-    MessageType_EthereumTxAck = 60 [(wire_in) = true];
-    MessageType_EthereumSignMessage = 64 [(wire_in) = true];
-    MessageType_EthereumVerifyMessage = 65 [(wire_in) = true];
-    MessageType_EthereumMessageSignature = 66 [(wire_out) = true];
+    // Drillum
+    MessageType_DrillumGetPublicKey = 450 [(wire_in) = true];
+    MessageType_DrillumPublicKey = 451 [(wire_out) = true];
+    MessageType_DrillumGetAddress = 56 [(wire_in) = true];
+    MessageType_DrillumAddress = 57 [(wire_out) = true];
+    MessageType_DrillumSignTx = 58 [(wire_in) = true];
+    MessageType_DrillumTxRequest = 59 [(wire_out) = true];
+    MessageType_DrillumTxAck = 60 [(wire_in) = true];
+    MessageType_DrillumSignMessage = 64 [(wire_in) = true];
+    MessageType_DrillumVerifyMessage = 65 [(wire_in) = true];
+    MessageType_DrillumMessageSignature = 66 [(wire_out) = true];
 
     // NEM
     MessageType_NEMGetAddress = 67 [(wire_in) = true];

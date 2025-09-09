@@ -1,18 +1,18 @@
-// Copyright 2021 The go-ethereum Authors
-// This file is part of the go-ethereum library.
+// Copyright 2021 The go-drillum Authors
+// This file is part of the go-drillum library.
 //
-// The go-ethereum library is free software: you can redistribute it and/or modify
+// The go-drillum library is free software: you can redistribute it and/or modify
 // it under the terms of the GNU Lesser General Public License as published by
 // the Free Software Foundation, either version 3 of the License, or
 // (at your option) any later version.
 //
-// The go-ethereum library is distributed in the hope that it will be useful,
+// The go-drillum library is distributed in the hope that it will be useful,
 // but WITHOUT ANY WARRANTY; without even the implied warranty of
 // MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
 // GNU Lesser General Public License for more details.
 //
 // You should have received a copy of the GNU Lesser General Public License
-// along with the go-ethereum library. If not, see <http://www.gnu.org/licenses/>.
+// along with the go-drillum library. If not, see <http://www.gnu.org/licenses/>.
 
 package core
 
@@ -20,12 +20,12 @@ import (
 	"context"
 	"time"
 
-	"github.com/ethereum/go-ethereum/common"
-	"github.com/ethereum/go-ethereum/common/bitutil"
-	"github.com/ethereum/go-ethereum/core/bloombits"
-	"github.com/ethereum/go-ethereum/core/rawdb"
-	"github.com/ethereum/go-ethereum/core/types"
-	"github.com/ethereum/go-ethereum/ethdb"
+	"github.com/drillum-network/go-drillum/common"
+	"github.com/drillum-network/go-drillum/common/bitutil"
+	"github.com/drillum-network/go-drillum/core/bloombits"
+	"github.com/drillum-network/go-drillum/core/rawdb"
+	"github.com/drillum-network/go-drillum/core/types"
+	"github.com/drillum-network/go-drillum/ethdb"
 )
 
 const (
@@ -35,7 +35,7 @@ const (
 )
 
 // BloomIndexer implements a core.ChainIndexer, building up a rotated bloom bits index
-// for the Ethereum header bloom filters, permitting blazing fast filtering.
+// for the Drillum header bloom filters, permitting blazing fast filtering.
 type BloomIndexer struct {
 	size    uint64               // section size to generate bloombits for
 	db      ethdb.Database       // database instance to write index data and metadata into

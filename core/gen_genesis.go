@@ -7,10 +7,10 @@ import (
 	"errors"
 	"math/big"
 
-	"github.com/ethereum/go-ethereum/common"
-	"github.com/ethereum/go-ethereum/common/hexutil"
-	"github.com/ethereum/go-ethereum/common/math"
-	"github.com/ethereum/go-ethereum/params"
+	"github.com/drillum-network/go-drillum/common"
+	"github.com/drillum-network/go-drillum/common/hexutil"
+	"github.com/drillum-network/go-drillum/common/math"
+	"github.com/drillum-network/go-drillum/params"
 )
 
 var _ = (*genesisSpecMarshaling)(nil)

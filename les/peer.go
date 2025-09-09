@@ -1,18 +1,18 @@
-// Copyright 2016 The go-ethereum Authors
-// This file is part of the go-ethereum library.
+// Copyright 2016 The go-drillum Authors
+// This file is part of the go-drillum library.
 //
-// The go-ethereum library is free software: you can redistribute it and/or modify
+// The go-drillum library is free software: you can redistribute it and/or modify
 // it under the terms of the GNU Lesser General Public License as published by
 // the Free Software Foundation, either version 3 of the License, or
 // (at your option) any later version.
 //
-// The go-ethereum library is distributed in the hope that it will be useful,
+// The go-drillum library is distributed in the hope that it will be useful,
 // but WITHOUT ANY WARRANTY; without even the implied warranty of
 // MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
 // GNU Lesser General Public License for more details.
 //
 // You should have received a copy of the GNU Lesser General Public License
-// along with the go-ethereum library. If not, see <http://www.gnu.org/licenses/>.
+// along with the go-drillum library. If not, see <http://www.gnu.org/licenses/>.
 
 package les
 
@@ -27,20 +27,20 @@ import (
 	"sync/atomic"
 	"time"
 
-	"github.com/ethereum/go-ethereum/common"
-	"github.com/ethereum/go-ethereum/common/mclock"
-	"github.com/ethereum/go-ethereum/core"
-	"github.com/ethereum/go-ethereum/core/forkid"
-	"github.com/ethereum/go-ethereum/core/types"
-	"github.com/ethereum/go-ethereum/les/flowcontrol"
-	"github.com/ethereum/go-ethereum/les/utils"
-	vfc "github.com/ethereum/go-ethereum/les/vflux/client"
-	vfs "github.com/ethereum/go-ethereum/les/vflux/server"
-	"github.com/ethereum/go-ethereum/light"
-	"github.com/ethereum/go-ethereum/p2p"
-	"github.com/ethereum/go-ethereum/p2p/enode"
-	"github.com/ethereum/go-ethereum/params"
-	"github.com/ethereum/go-ethereum/rlp"
+	"github.com/drillum-network/go-drillum/common"
+	"github.com/drillum-network/go-drillum/common/mclock"
+	"github.com/drillum-network/go-drillum/core"
+	"github.com/drillum-network/go-drillum/core/forkid"
+	"github.com/drillum-network/go-drillum/core/types"
+	"github.com/drillum-network/go-drillum/les/flowcontrol"
+	"github.com/drillum-network/go-drillum/les/utils"
+	vfc "github.com/drillum-network/go-drillum/les/vflux/client"
+	vfs "github.com/drillum-network/go-drillum/les/vflux/server"
+	"github.com/drillum-network/go-drillum/light"
+	"github.com/drillum-network/go-drillum/p2p"
+	"github.com/drillum-network/go-drillum/p2p/enode"
+	"github.com/drillum-network/go-drillum/params"
+	"github.com/drillum-network/go-drillum/rlp"
 )
 
 var (
@@ -166,7 +166,7 @@ func (p *peerCommons) String() string {
 // PeerInfo represents a short summary of the `eth` sub-protocol metadata known
 // about a connected peer.
 type PeerInfo struct {
-	Version    int      `json:"version"`    // Ethereum protocol version negotiated
+	Version    int      `json:"version"`    // Drillum protocol version negotiated
 	Difficulty *big.Int `json:"difficulty"` // Total difficulty of the peer's blockchain
 	Head       string   `json:"head"`       // SHA3 hash of the peer's best owned block
 }
@@ -1022,7 +1022,7 @@ func (p *clientPeer) Handshake(td *big.Int, head common.Hash, headNum uint64, ge
 			*lists = (*lists).add("serveChainSince", uint64(0))
 			*lists = (*lists).add("serveStateSince", uint64(0))
 
-			// If local ethereum node is running in archive mode, advertise ourselves we have
+			// If local drillum node is running in archive mode, advertise ourselves we have
 			// all version state data. Otherwise only recent state is available.
 			stateRecent := uint64(core.TriesInMemory - blockSafetyMargin)
 			if server.archiveMode {
@@ -1095,7 +1095,7 @@ type serverPeerSubscriber interface {
 }
 
 // serverPeerSet represents the set of active server peers currently
-// participating in the Light Ethereum sub-protocol.
+// participating in the Light Drillum sub-protocol.
 type serverPeerSet struct {
 	peers map[string]*serverPeer
 	// subscribers is a batch of subscribers and peerset will notify
@@ -1214,7 +1214,7 @@ func (ps *serverPeerSet) close() {
 }
 
 // clientPeerSet represents the set of active client peers currently
-// participating in the Light Ethereum sub-protocol.
+// participating in the Light Drillum sub-protocol.
 type clientPeerSet struct {
 	peers  map[enode.ID]*clientPeer
 	lock   sync.RWMutex

@@ -1,18 +1,18 @@
-// Copyright 2022 The go-ethereum Authors
-// This file is part of the go-ethereum library.
+// Copyright 2022 The go-drillum Authors
+// This file is part of the go-drillum library.
 //
-// The go-ethereum library is free software: you can redistribute it and/or modify
+// The go-drillum library is free software: you can redistribute it and/or modify
 // it under the terms of the GNU Lesser General Public License as published by
 // the Free Software Foundation, either version 3 of the License, or
 // (at your option) any later version.
 //
-// The go-ethereum library is distributed in the hope that it will be useful,
+// The go-drillum library is distributed in the hope that it will be useful,
 // but WITHOUT ANY WARRANTY; without even the implied warranty of
 // MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
 // GNU Lesser General Public License for more details.
 //
 // You should have received a copy of the GNU Lesser General Public License
-// along with the go-ethereum library. If not, see <http://www.gnu.org/licenses/>.
+// along with the go-drillum library. If not, see <http://www.gnu.org/licenses/>.
 
 package ethapi
 
@@ -24,20 +24,20 @@ import (
 	"testing"
 	"time"
 
-	"github.com/ethereum/go-ethereum"
-	"github.com/ethereum/go-ethereum/accounts"
-	"github.com/ethereum/go-ethereum/common"
-	"github.com/ethereum/go-ethereum/common/hexutil"
-	"github.com/ethereum/go-ethereum/consensus"
-	"github.com/ethereum/go-ethereum/core"
-	"github.com/ethereum/go-ethereum/core/bloombits"
-	"github.com/ethereum/go-ethereum/core/state"
-	"github.com/ethereum/go-ethereum/core/types"
-	"github.com/ethereum/go-ethereum/core/vm"
-	"github.com/ethereum/go-ethereum/ethdb"
-	"github.com/ethereum/go-ethereum/event"
-	"github.com/ethereum/go-ethereum/params"
-	"github.com/ethereum/go-ethereum/rpc"
+	"github.com/drillum-network/go-drillum"
+	"github.com/drillum-network/go-drillum/accounts"
+	"github.com/drillum-network/go-drillum/common"
+	"github.com/drillum-network/go-drillum/common/hexutil"
+	"github.com/drillum-network/go-drillum/consensus"
+	"github.com/drillum-network/go-drillum/core"
+	"github.com/drillum-network/go-drillum/core/bloombits"
+	"github.com/drillum-network/go-drillum/core/state"
+	"github.com/drillum-network/go-drillum/core/types"
+	"github.com/drillum-network/go-drillum/core/vm"
+	"github.com/drillum-network/go-drillum/ethdb"
+	"github.com/drillum-network/go-drillum/event"
+	"github.com/drillum-network/go-drillum/params"
+	"github.com/drillum-network/go-drillum/rpc"
 )
 
 // TestSetFeeDefaults tests the logic for filling in default fee values works as expected.
@@ -257,7 +257,7 @@ func (b *backendMock) CurrentHeader() *types.Header     { return b.current }
 func (b *backendMock) ChainConfig() *params.ChainConfig { return b.config }
 
 // Other methods needed to implement Backend interface.
-func (b *backendMock) SyncProgress() ethereum.SyncProgress { return ethereum.SyncProgress{} }
+func (b *backendMock) SyncProgress() drillum.SyncProgress { return drillum.SyncProgress{} }
 func (b *backendMock) FeeHistory(ctx context.Context, blockCount int, lastBlock rpc.BlockNumber, rewardPercentiles []float64) (*big.Int, [][]*big.Int, []*big.Int, []float64, error) {
 	return nil, nil, nil, nil, nil
 }

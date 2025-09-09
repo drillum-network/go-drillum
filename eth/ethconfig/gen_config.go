@@ -6,13 +6,13 @@ import (
 	"math/big"
 	"time"
 
-	"github.com/ethereum/go-ethereum/common"
-	"github.com/ethereum/go-ethereum/consensus/ethash"
-	"github.com/ethereum/go-ethereum/core"
-	"github.com/ethereum/go-ethereum/eth/downloader"
-	"github.com/ethereum/go-ethereum/eth/gasprice"
-	"github.com/ethereum/go-ethereum/miner"
-	"github.com/ethereum/go-ethereum/params"
+	"github.com/drillum-network/go-drillum/common"
+	"github.com/drillum-network/go-drillum/consensus/ethash"
+	"github.com/drillum-network/go-drillum/core"
+	"github.com/drillum-network/go-drillum/eth/downloader"
+	"github.com/drillum-network/go-drillum/eth/gasprice"
+	"github.com/drillum-network/go-drillum/miner"
+	"github.com/drillum-network/go-drillum/params"
 )
 
 // MarshalTOML marshals as TOML.

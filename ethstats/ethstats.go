@@ -1,18 +1,18 @@
-// Copyright 2016 The go-ethereum Authors
-// This file is part of the go-ethereum library.
+// Copyright 2016 The go-drillum Authors
+// This file is part of the go-drillum library.
 //
-// The go-ethereum library is free software: you can redistribute it and/or modify
+// The go-drillum library is free software: you can redistribute it and/or modify
 // it under the terms of the GNU Lesser General Public License as published by
 // the Free Software Foundation, either version 3 of the License, or
 // (at your option) any later version.
 //
-// The go-ethereum library is distributed in the hope that it will be useful,
+// The go-drillum library is distributed in the hope that it will be useful,
 // but WITHOUT ANY WARRANTY; without even the implied warranty of
 // MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
 // GNU Lesser General Public License for more details.
 //
 // You should have received a copy of the GNU Lesser General Public License
-// along with the go-ethereum library. If not, see <http://www.gnu.org/licenses/>.
+// along with the go-drillum library. If not, see <http://www.gnu.org/licenses/>.
 
 // Package ethstats implements the network stats reporting service.
 package ethstats
@@ -30,20 +30,20 @@ import (
 	"sync"
 	"time"
 
-	"github.com/ethereum/go-ethereum"
-	"github.com/ethereum/go-ethereum/common"
-	"github.com/ethereum/go-ethereum/common/mclock"
-	"github.com/ethereum/go-ethereum/consensus"
-	"github.com/ethereum/go-ethereum/core"
-	"github.com/ethereum/go-ethereum/core/types"
-	ethproto "github.com/ethereum/go-ethereum/eth/protocols/eth"
-	"github.com/ethereum/go-ethereum/event"
-	"github.com/ethereum/go-ethereum/les"
-	"github.com/ethereum/go-ethereum/log"
-	"github.com/ethereum/go-ethereum/miner"
-	"github.com/ethereum/go-ethereum/node"
-	"github.com/ethereum/go-ethereum/p2p"
-	"github.com/ethereum/go-ethereum/rpc"
+	"github.com/drillum-network/go-drillum"
+	"github.com/drillum-network/go-drillum/common"
+	"github.com/drillum-network/go-drillum/common/mclock"
+	"github.com/drillum-network/go-drillum/consensus"
+	"github.com/drillum-network/go-drillum/core"
+	"github.com/drillum-network/go-drillum/core/types"
+	ethproto "github.com/drillum-network/go-drillum/eth/protocols/eth"
+	"github.com/drillum-network/go-drillum/event"
+	"github.com/drillum-network/go-drillum/les"
+	"github.com/drillum-network/go-drillum/log"
+	"github.com/drillum-network/go-drillum/miner"
+	"github.com/drillum-network/go-drillum/node"
+	"github.com/drillum-network/go-drillum/p2p"
+	"github.com/drillum-network/go-drillum/rpc"
 	"github.com/gorilla/websocket"
 )
 
@@ -67,7 +67,7 @@ type backend interface {
 	HeaderByNumber(ctx context.Context, number rpc.BlockNumber) (*types.Header, error)
 	GetTd(ctx context.Context, hash common.Hash) *big.Int
 	Stats() (pending int, queued int)
-	SyncProgress() ethereum.SyncProgress
+	SyncProgress() drillum.SyncProgress
 }
 
 // fullNodeBackend encompasses the functionality necessary for a full node
@@ -80,7 +80,7 @@ type fullNodeBackend interface {
 	SuggestGasTipCap(ctx context.Context) (*big.Int, error)
 }
 
-// Service implements an Ethereum netstats reporting daemon that pushes local
+// Service implements an Drillum netstats reporting daemon that pushes local
 // chain statistics up to a monitoring server.
 type Service struct {
 	server  *p2p.Server // Peer-to-peer server to retrieve networking infos

@@ -1,18 +1,18 @@
-// Copyright 2016 The go-ethereum Authors
-// This file is part of the go-ethereum library.
+// Copyright 2016 The go-drillum Authors
+// This file is part of the go-drillum library.
 //
-// The go-ethereum library is free software: you can redistribute it and/or modify
+// The go-drillum library is free software: you can redistribute it and/or modify
 // it under the terms of the GNU Lesser General Public License as published by
 // the Free Software Foundation, either version 3 of the License, or
 // (at your option) any later version.
 //
-// The go-ethereum library is distributed in the hope that it will be useful,
+// The go-drillum library is distributed in the hope that it will be useful,
 // but WITHOUT ANY WARRANTY; without even the implied warranty of
 // MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
 // GNU Lesser General Public License for more details.
 //
 // You should have received a copy of the GNU Lesser General Public License
-// along with the go-ethereum library. If not, see <http://www.gnu.org/licenses/>.
+// along with the go-drillum library. If not, see <http://www.gnu.org/licenses/>.
 
 package les
 
@@ -20,20 +20,20 @@ import (
 	"crypto/ecdsa"
 	"time"
 
-	"github.com/ethereum/go-ethereum/common/mclock"
-	"github.com/ethereum/go-ethereum/core"
-	"github.com/ethereum/go-ethereum/eth/ethconfig"
-	"github.com/ethereum/go-ethereum/ethdb"
-	"github.com/ethereum/go-ethereum/les/flowcontrol"
-	vfs "github.com/ethereum/go-ethereum/les/vflux/server"
-	"github.com/ethereum/go-ethereum/light"
-	"github.com/ethereum/go-ethereum/log"
-	"github.com/ethereum/go-ethereum/node"
-	"github.com/ethereum/go-ethereum/p2p"
-	"github.com/ethereum/go-ethereum/p2p/enode"
-	"github.com/ethereum/go-ethereum/p2p/enr"
-	"github.com/ethereum/go-ethereum/params"
-	"github.com/ethereum/go-ethereum/rpc"
+	"github.com/drillum-network/go-drillum/common/mclock"
+	"github.com/drillum-network/go-drillum/core"
+	"github.com/drillum-network/go-drillum/eth/ethconfig"
+	"github.com/drillum-network/go-drillum/ethdb"
+	"github.com/drillum-network/go-drillum/les/flowcontrol"
+	vfs "github.com/drillum-network/go-drillum/les/vflux/server"
+	"github.com/drillum-network/go-drillum/light"
+	"github.com/drillum-network/go-drillum/log"
+	"github.com/drillum-network/go-drillum/node"
+	"github.com/drillum-network/go-drillum/p2p"
+	"github.com/drillum-network/go-drillum/p2p/enode"
+	"github.com/drillum-network/go-drillum/p2p/enr"
+	"github.com/drillum-network/go-drillum/params"
+	"github.com/drillum-network/go-drillum/rpc"
 )
 
 var (
@@ -55,7 +55,7 @@ type ethBackend interface {
 type LesServer struct {
 	lesCommons
 
-	archiveMode bool // Flag whether the ethereum node runs in archive mode.
+	archiveMode bool // Flag whether the drillum node runs in archive mode.
 	handler     *serverHandler
 	peers       *clientPeerSet
 	serverset   *serverSet
@@ -140,7 +140,7 @@ func NewLesServer(node *node.Node, e ethBackend, config *ethconfig.Config) (*Les
 	srv.clientPool = vfs.NewClientPool(lesDb, srv.minCapacity, defaultConnectedBias, mclock.System{}, issync)
 	srv.clientPool.Start()
 	srv.clientPool.SetDefaultFactors(defaultPosFactors, defaultNegFactors)
-	srv.vfluxServer.Register(srv.clientPool, "les", "Ethereum light client service")
+	srv.vfluxServer.Register(srv.clientPool, "les", "Drillum light client service")
 
 	checkpoint := srv.latestLocalCheckpoint()
 	if !checkpoint.Empty() {

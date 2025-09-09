@@ -1,18 +1,18 @@
-// Copyright 2019 The go-ethereum Authors
-// This file is part of the go-ethereum library.
+// Copyright 2019 The go-drillum Authors
+// This file is part of the go-drillum library.
 //
-// The go-ethereum library is free software: you can redistribute it and/or modify
+// The go-drillum library is free software: you can redistribute it and/or modify
 // it under the terms of the GNU Lesser General Public License as published by
 // the Free Software Foundation, either version 3 of the License, or
 // (at your option) any later version.
 //
-// The go-ethereum library is distributed in the hope that it will be useful,
+// The go-drillum library is distributed in the hope that it will be useful,
 // but WITHOUT ANY WARRANTY; without even the implied warranty of
 // MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
 // GNU Lesser General Public License for more details.
 //
 // You should have received a copy of the GNU Lesser General Public License
-// along with the go-ethereum library. If not, see <http://www.gnu.org/licenses/>.
+// along with the go-drillum library. If not, see <http://www.gnu.org/licenses/>.
 
 package bind_test
 
@@ -24,14 +24,14 @@ import (
 	"strings"
 	"testing"
 
-	"github.com/ethereum/go-ethereum"
-	"github.com/ethereum/go-ethereum/accounts/abi"
-	"github.com/ethereum/go-ethereum/accounts/abi/bind"
-	"github.com/ethereum/go-ethereum/common"
-	"github.com/ethereum/go-ethereum/common/hexutil"
-	"github.com/ethereum/go-ethereum/core/types"
-	"github.com/ethereum/go-ethereum/crypto"
-	"github.com/ethereum/go-ethereum/rlp"
+	"github.com/drillum-network/go-drillum"
+	"github.com/drillum-network/go-drillum/accounts/abi"
+	"github.com/drillum-network/go-drillum/accounts/abi/bind"
+	"github.com/drillum-network/go-drillum/common"
+	"github.com/drillum-network/go-drillum/common/hexutil"
+	"github.com/drillum-network/go-drillum/core/types"
+	"github.com/drillum-network/go-drillum/crypto"
+	"github.com/drillum-network/go-drillum/rlp"
 	"github.com/stretchr/testify/assert"
 )
 
@@ -67,7 +67,7 @@ func (mt *mockTransactor) SuggestGasTipCap(ctx context.Context) (*big.Int, error
 	return mt.gasTipCap, nil
 }
 
-func (mt *mockTransactor) EstimateGas(ctx context.Context, call ethereum.CallMsg) (gas uint64, err error) {
+func (mt *mockTransactor) EstimateGas(ctx context.Context, call drillum.CallMsg) (gas uint64, err error) {
 	return 0, nil
 }
 
@@ -89,7 +89,7 @@ func (mc *mockCaller) CodeAt(ctx context.Context, contract common.Address, block
 	return mc.codeAtBytes, mc.codeAtErr
 }
 
-func (mc *mockCaller) CallContract(ctx context.Context, call ethereum.CallMsg, blockNumber *big.Int) ([]byte, error) {
+func (mc *mockCaller) CallContract(ctx context.Context, call drillum.CallMsg, blockNumber *big.Int) ([]byte, error) {
 	mc.callContractBlockNumber = blockNumber
 	return mc.callContractBytes, mc.callContractErr
 }
@@ -109,7 +109,7 @@ func (mc *mockPendingCaller) PendingCodeAt(ctx context.Context, contract common.
 	return mc.pendingCodeAtBytes, mc.pendingCodeAtErr
 }
 
-func (mc *mockPendingCaller) PendingCallContract(ctx context.Context, call ethereum.CallMsg) ([]byte, error) {
+func (mc *mockPendingCaller) PendingCallContract(ctx context.Context, call drillum.CallMsg) ([]byte, error) {
 	mc.pendingCallContractCalled = true
 	return mc.pendingCallContractBytes, mc.pendingCallContractErr
 }

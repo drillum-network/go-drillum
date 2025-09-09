@@ -17,12 +17,12 @@ Section "Uninstall"
   rmDir "$SMPROGRAMS\${APPNAME}"
 
   # Firewall - remove rules if exists
-  SimpleFC::AdvRemoveRule "Geth incoming peers (TCP:30303)"
-  SimpleFC::AdvRemoveRule "Geth outgoing peers (TCP:30303)"
-  SimpleFC::AdvRemoveRule "Geth UDP discovery (UDP:30303)"
+  SimpleFC::AdvRemoveRule "Gdrill incoming peers (TCP:30303)"
+  SimpleFC::AdvRemoveRule "Gdrill outgoing peers (TCP:30303)"
+  SimpleFC::AdvRemoveRule "Gdrill UDP discovery (UDP:30303)"
 
   # Remove IPC endpoint (https://github.com/ethereum/EIPs/issues/147)
-  ${un.EnvVarUpdate} $0 "ETHEREUM_SOCKET" "R" "HKLM" "\\.\pipe\geth.ipc"
+  ${un.EnvVarUpdate} $0 "DRILLUM_SOCKET" "R" "HKLM" "\\.\pipe\gdrill.ipc"
 
   # Remove install directory from PATH
   Push "$INSTDIR"

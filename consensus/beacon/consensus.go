@@ -1,18 +1,18 @@
-// Copyright 2021 The go-ethereum Authors
-// This file is part of the go-ethereum library.
+// Copyright 2021 The go-drillum Authors
+// This file is part of the go-drillum library.
 //
-// The go-ethereum library is free software: you can redistribute it and/or modify
+// The go-drillum library is free software: you can redistribute it and/or modify
 // it under the terms of the GNU Lesser General Public License as published by
 // the Free Software Foundation, either version 3 of the License, or
 // (at your option) any later version.
 //
-// The go-ethereum library is distributed in the hope that it will be useful,
+// The go-drillum library is distributed in the hope that it will be useful,
 // but WITHOUT ANY WARRANTY; without even the implied warranty of
 // MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
 // GNU Lesser General Public License for more details.
 //
 // You should have received a copy of the GNU Lesser General Public License
-// along with the go-ethereum library. If not, see <http://www.gnu.org/licenses/>.
+// along with the go-drillum library. If not, see <http://www.gnu.org/licenses/>.
 
 package beacon
 
@@ -21,14 +21,14 @@ import (
 	"fmt"
 	"math/big"
 
-	"github.com/ethereum/go-ethereum/common"
-	"github.com/ethereum/go-ethereum/consensus"
-	"github.com/ethereum/go-ethereum/consensus/misc"
-	"github.com/ethereum/go-ethereum/core/state"
-	"github.com/ethereum/go-ethereum/core/types"
-	"github.com/ethereum/go-ethereum/params"
-	"github.com/ethereum/go-ethereum/rpc"
-	"github.com/ethereum/go-ethereum/trie"
+	"github.com/drillum-network/go-drillum/common"
+	"github.com/drillum-network/go-drillum/consensus"
+	"github.com/drillum-network/go-drillum/consensus/misc"
+	"github.com/drillum-network/go-drillum/core/state"
+	"github.com/drillum-network/go-drillum/core/types"
+	"github.com/drillum-network/go-drillum/params"
+	"github.com/drillum-network/go-drillum/rpc"
+	"github.com/drillum-network/go-drillum/trie"
 )
 
 // Proof-of-stake protocol constants.
@@ -77,7 +77,7 @@ func (beacon *Beacon) Author(header *types.Header) (common.Address, error) {
 }
 
 // VerifyHeader checks whether a header conforms to the consensus rules of the
-// stock Ethereum consensus engine.
+// stock Drillum consensus engine.
 func (beacon *Beacon) VerifyHeader(chain consensus.ChainHeaderReader, header *types.Header, seal bool) error {
 	reached, err := IsTTDReached(chain, header.ParentHash, header.Number.Uint64()-1)
 	if err != nil {
@@ -209,7 +209,7 @@ func verifyTerminalPoWBlock(chain consensus.ChainHeaderReader, preHeaders []*typ
 }
 
 // VerifyUncles verifies that the given block's uncles conform to the consensus
-// rules of the Ethereum consensus engine.
+// rules of the Drillum consensus engine.
 func (beacon *Beacon) VerifyUncles(chain consensus.ChainReader, block *types.Block) error {
 	if !beacon.IsPoSHeader(block.Header()) {
 		return beacon.ethone.VerifyUncles(chain, block)
@@ -222,7 +222,7 @@ func (beacon *Beacon) VerifyUncles(chain consensus.ChainReader, block *types.Blo
 }
 
 // verifyHeader checks whether a header conforms to the consensus rules of the
-// stock Ethereum consensus engine. The difference between the beacon and classic is
+// stock Drillum consensus engine. The difference between the beacon and classic is
 // (a) The following fields are expected to be constants:
 //     - difficulty is expected to be 0
 // 	   - nonce is expected to be 0

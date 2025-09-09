@@ -1,0 +1,5 @@
+build/bin/{{.BinaryName}} usr/bin
+{{- if eq .BinaryName "gdrill" }}
+build/deb/drillum/completions/bash/gdrill etc/bash_completion.d
+build/deb/drillum/completions/zsh/_gdrill usr/share/zsh/vendor-completions
+{{end -}}

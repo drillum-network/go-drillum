@@ -1,18 +1,18 @@
-// Copyright 2019 The go-ethereum Authors
-// This file is part of the go-ethereum library.
+// Copyright 2019 The go-drillum Authors
+// This file is part of the go-drillum library.
 //
-// The go-ethereum library is free software: you can redistribute it and/or modify
+// The go-drillum library is free software: you can redistribute it and/or modify
 // it under the terms of the GNU Lesser General Public License as published by
 // the Free Software Foundation, either version 3 of the License, or
 // (at your option) any later version.
 //
-// The go-ethereum library is distributed in the hope that it will be useful,
+// The go-drillum library is distributed in the hope that it will be useful,
 // but WITHOUT ANY WARRANTY; without even the implied warranty of
 // MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
 // GNU Lesser General Public License for more details.
 //
 // You should have received a copy of the GNU Lesser General Public License
-// along with the go-ethereum library. If not, see <http://www.gnu.org/licenses/>.
+// along with the go-drillum library. If not, see <http://www.gnu.org/licenses/>.
 
 package core_test
 
@@ -26,13 +26,13 @@ import (
 	"strings"
 	"testing"
 
-	"github.com/ethereum/go-ethereum/accounts/keystore"
-	"github.com/ethereum/go-ethereum/common"
-	"github.com/ethereum/go-ethereum/common/hexutil"
-	"github.com/ethereum/go-ethereum/common/math"
-	"github.com/ethereum/go-ethereum/crypto"
-	"github.com/ethereum/go-ethereum/signer/core"
-	"github.com/ethereum/go-ethereum/signer/core/apitypes"
+	"github.com/drillum-network/go-drillum/accounts/keystore"
+	"github.com/drillum-network/go-drillum/common"
+	"github.com/drillum-network/go-drillum/common/hexutil"
+	"github.com/drillum-network/go-drillum/common/math"
+	"github.com/drillum-network/go-drillum/crypto"
+	"github.com/drillum-network/go-drillum/signer/core"
+	"github.com/drillum-network/go-drillum/signer/core/apitypes"
 )
 
 var typesStandard = apitypes.Types{
@@ -132,7 +132,7 @@ var jsonTypedData = `
       },
       "primaryType": "Mail",
       "domain": {
-        "name": "Ether Mail",
+        "name": "Drill Mail",
         "version": "1",
         "chainId": "1",
         "verifyingContract": "0xCCCcccccCCCCcCCCCCCcCcCccCcCCCcCcccccccC"
@@ -155,7 +155,7 @@ var jsonTypedData = `
 const primaryType = "Mail"
 
 var domainStandard = apitypes.TypedDataDomain{
-	Name:              "Ether Mail",
+	Name:              "Drill Mail",
 	Version:           "1",
 	ChainId:           math.NewHexOrDecimal256(1),
 	VerifyingContract: "0xCcCCccccCCCCcCCCCCCcCcCccCcCCCcCcccccccC",

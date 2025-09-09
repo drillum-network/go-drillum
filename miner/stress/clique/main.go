@@ -1,18 +1,18 @@
-// Copyright 2018 The go-ethereum Authors
-// This file is part of the go-ethereum library.
+// Copyright 2018 The go-drillum Authors
+// This file is part of the go-drillum library.
 //
-// The go-ethereum library is free software: you can redistribute it and/or modify
+// The go-drillum library is free software: you can redistribute it and/or modify
 // it under the terms of the GNU Lesser General Public License as published by
 // the Free Software Foundation, either version 3 of the License, or
 // (at your option) any later version.
 //
-// The go-ethereum library is distributed in the hope that it will be useful,
+// The go-drillum library is distributed in the hope that it will be useful,
 // but WITHOUT ANY WARRANTY; without even the implied warranty of
 // MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
 // GNU Lesser General Public License for more details.
 //
 // You should have received a copy of the GNU Lesser General Public License
-// along with the go-ethereum library. If not, see <http://www.gnu.org/licenses/>.
+// along with the go-drillum library. If not, see <http://www.gnu.org/licenses/>.
 
 // This file contains a miner stress test based on the Clique consensus engine.
 package main
@@ -26,21 +26,21 @@ import (
 	"os/signal"
 	"time"
 
-	"github.com/ethereum/go-ethereum/accounts/keystore"
-	"github.com/ethereum/go-ethereum/common"
-	"github.com/ethereum/go-ethereum/common/fdlimit"
-	"github.com/ethereum/go-ethereum/core"
-	"github.com/ethereum/go-ethereum/core/types"
-	"github.com/ethereum/go-ethereum/crypto"
-	"github.com/ethereum/go-ethereum/eth"
-	"github.com/ethereum/go-ethereum/eth/downloader"
-	"github.com/ethereum/go-ethereum/eth/ethconfig"
-	"github.com/ethereum/go-ethereum/log"
-	"github.com/ethereum/go-ethereum/miner"
-	"github.com/ethereum/go-ethereum/node"
-	"github.com/ethereum/go-ethereum/p2p"
-	"github.com/ethereum/go-ethereum/p2p/enode"
-	"github.com/ethereum/go-ethereum/params"
+	"github.com/drillum-network/go-drillum/accounts/keystore"
+	"github.com/drillum-network/go-drillum/common"
+	"github.com/drillum-network/go-drillum/common/fdlimit"
+	"github.com/drillum-network/go-drillum/core"
+	"github.com/drillum-network/go-drillum/core/types"
+	"github.com/drillum-network/go-drillum/crypto"
+	"github.com/drillum-network/go-drillum/eth"
+	"github.com/drillum-network/go-drillum/eth/downloader"
+	"github.com/drillum-network/go-drillum/eth/ethconfig"
+	"github.com/drillum-network/go-drillum/log"
+	"github.com/drillum-network/go-drillum/miner"
+	"github.com/drillum-network/go-drillum/node"
+	"github.com/drillum-network/go-drillum/p2p"
+	"github.com/drillum-network/go-drillum/p2p/enode"
+	"github.com/drillum-network/go-drillum/params"
 )
 
 func main() {
@@ -65,7 +65,7 @@ func main() {
 
 	var (
 		stacks []*node.Node
-		nodes  []*eth.Ethereum
+		nodes  []*eth.Drillum
 		enodes []*enode.Node
 	)
 	for _, sealer := range sealers {
@@ -180,12 +180,12 @@ func makeGenesis(faucets []*ecdsa.PrivateKey, sealers []*ecdsa.PrivateKey) *core
 	return genesis
 }
 
-func makeSealer(genesis *core.Genesis) (*node.Node, *eth.Ethereum, error) {
-	// Define the basic configurations for the Ethereum node
+func makeSealer(genesis *core.Genesis) (*node.Node, *eth.Drillum, error) {
+	// Define the basic configurations for the Drillum node
 	datadir, _ := os.MkdirTemp("", "")
 
 	config := &node.Config{
-		Name:    "geth",
+		Name:    "gdrill",
 		Version: params.Version,
 		DataDir: datadir,
 		P2P: p2p.Config{
@@ -194,7 +194,7 @@ func makeSealer(genesis *core.Genesis) (*node.Node, *eth.Ethereum, error) {
 			MaxPeers:    25,
 		},
 	}
-	// Start the node and configure a full Ethereum node on it
+	// Start the node and configure a full Drillum node on it
 	stack, err := node.New(config)
 	if err != nil {
 		return nil, nil, err

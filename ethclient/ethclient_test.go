@@ -1,18 +1,18 @@
-// Copyright 2016 The go-ethereum Authors
-// This file is part of the go-ethereum library.
+// Copyright 2016 The go-drillum Authors
+// This file is part of the go-drillum library.
 //
-// The go-ethereum library is free software: you can redistribute it and/or modify
+// The go-drillum library is free software: you can redistribute it and/or modify
 // it under the terms of the GNU Lesser General Public License as published by
 // the Free Software Foundation, either version 3 of the License, or
 // (at your option) any later version.
 //
-// The go-ethereum library is distributed in the hope that it will be useful,
+// The go-drillum library is distributed in the hope that it will be useful,
 // but WITHOUT ANY WARRANTY; without even the implied warranty of
 // MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
 // GNU Lesser General Public License for more details.
 //
 // You should have received a copy of the GNU Lesser General Public License
-// along with the go-ethereum library. If not, see <http://www.gnu.org/licenses/>.
+// along with the go-drillum library. If not, see <http://www.gnu.org/licenses/>.
 
 package ethclient
 
@@ -26,33 +26,33 @@ import (
 	"testing"
 	"time"
 
-	"github.com/ethereum/go-ethereum"
-	"github.com/ethereum/go-ethereum/common"
-	"github.com/ethereum/go-ethereum/consensus/ethash"
-	"github.com/ethereum/go-ethereum/core"
-	"github.com/ethereum/go-ethereum/core/rawdb"
-	"github.com/ethereum/go-ethereum/core/types"
-	"github.com/ethereum/go-ethereum/crypto"
-	"github.com/ethereum/go-ethereum/eth"
-	"github.com/ethereum/go-ethereum/eth/ethconfig"
-	"github.com/ethereum/go-ethereum/node"
-	"github.com/ethereum/go-ethereum/params"
-	"github.com/ethereum/go-ethereum/rpc"
+	"github.com/drillum-network/go-drillum"
+	"github.com/drillum-network/go-drillum/common"
+	"github.com/drillum-network/go-drillum/consensus/ethash"
+	"github.com/drillum-network/go-drillum/core"
+	"github.com/drillum-network/go-drillum/core/rawdb"
+	"github.com/drillum-network/go-drillum/core/types"
+	"github.com/drillum-network/go-drillum/crypto"
+	"github.com/drillum-network/go-drillum/eth"
+	"github.com/drillum-network/go-drillum/eth/ethconfig"
+	"github.com/drillum-network/go-drillum/node"
+	"github.com/drillum-network/go-drillum/params"
+	"github.com/drillum-network/go-drillum/rpc"
 )
 
-// Verify that Client implements the ethereum interfaces.
+// Verify that Client implements the drillum interfaces.
 var (
-	_ = ethereum.ChainReader(&Client{})
-	_ = ethereum.TransactionReader(&Client{})
-	_ = ethereum.ChainStateReader(&Client{})
-	_ = ethereum.ChainSyncReader(&Client{})
-	_ = ethereum.ContractCaller(&Client{})
-	_ = ethereum.GasEstimator(&Client{})
-	_ = ethereum.GasPricer(&Client{})
-	_ = ethereum.LogFilterer(&Client{})
-	_ = ethereum.PendingStateReader(&Client{})
-	// _ = ethereum.PendingStateEventer(&Client{})
-	_ = ethereum.PendingContractCaller(&Client{})
+	_ = drillum.ChainReader(&Client{})
+	_ = drillum.TransactionReader(&Client{})
+	_ = drillum.ChainStateReader(&Client{})
+	_ = drillum.ChainSyncReader(&Client{})
+	_ = drillum.ContractCaller(&Client{})
+	_ = drillum.GasEstimator(&Client{})
+	_ = drillum.GasPricer(&Client{})
+	_ = drillum.LogFilterer(&Client{})
+	_ = drillum.PendingStateReader(&Client{})
+	// _ = drillum.PendingStateEventer(&Client{})
+	_ = drillum.PendingContractCaller(&Client{})
 )
 
 func TestToFilterArg(t *testing.T) {
@@ -66,13 +66,13 @@ func TestToFilterArg(t *testing.T) {
 
 	for _, testCase := range []struct {
 		name   string
-		input  ethereum.FilterQuery
+		input  drillum.FilterQuery
 		output interface{}
 		err    error
 	}{
 		{
 			"without BlockHash",
-			ethereum.FilterQuery{
+			drillum.FilterQuery{
 				Addresses: addresses,
 				FromBlock: big.NewInt(1),
 				ToBlock:   big.NewInt(2),
@@ -88,7 +88,7 @@ func TestToFilterArg(t *testing.T) {
 		},
 		{
 			"with nil fromBlock and nil toBlock",
-			ethereum.FilterQuery{
+			drillum.FilterQuery{
 				Addresses: addresses,
 				Topics:    [][]common.Hash{},
 			},
@@ -102,7 +102,7 @@ func TestToFilterArg(t *testing.T) {
 		},
 		{
 			"with negative fromBlock and negative toBlock",
-			ethereum.FilterQuery{
+			drillum.FilterQuery{
 				Addresses: addresses,
 				FromBlock: big.NewInt(-1),
 				ToBlock:   big.NewInt(-1),
@@ -118,7 +118,7 @@ func TestToFilterArg(t *testing.T) {
 		},
 		{
 			"with blockhash",
-			ethereum.FilterQuery{
+			drillum.FilterQuery{
 				Addresses: addresses,
 				BlockHash: &blockHash,
 				Topics:    [][]common.Hash{},
@@ -132,7 +132,7 @@ func TestToFilterArg(t *testing.T) {
 		},
 		{
 			"with blockhash and from block",
-			ethereum.FilterQuery{
+			drillum.FilterQuery{
 				Addresses: addresses,
 				BlockHash: &blockHash,
 				FromBlock: big.NewInt(1),
@@ -143,7 +143,7 @@ func TestToFilterArg(t *testing.T) {
 		},
 		{
 			"with blockhash and to block",
-			ethereum.FilterQuery{
+			drillum.FilterQuery{
 				Addresses: addresses,
 				BlockHash: &blockHash,
 				ToBlock:   big.NewInt(1),
@@ -154,7 +154,7 @@ func TestToFilterArg(t *testing.T) {
 		},
 		{
 			"with blockhash and both from / to block",
-			ethereum.FilterQuery{
+			drillum.FilterQuery{
 				Addresses: addresses,
 				BlockHash: &blockHash,
 				FromBlock: big.NewInt(1),
@@ -220,12 +220,12 @@ func newTestBackend(t *testing.T) (*node.Node, []*types.Block) {
 	if err != nil {
 		t.Fatalf("can't create new node: %v", err)
 	}
-	// Create Ethereum Service
+	// Create Drillum Service
 	config := &ethconfig.Config{Genesis: genesis}
 	config.Ethash.PowMode = ethash.ModeFake
 	ethservice, err := eth.New(n, config)
 	if err != nil {
-		t.Fatalf("can't create new ethereum service: %v", err)
+		t.Fatalf("can't create new drillum service: %v", err)
 	}
 	// Import the test chain.
 	if err := n.Start(); err != nil {
@@ -319,7 +319,7 @@ func testHeader(t *testing.T, chain []*types.Block, client *rpc.Client) {
 		"future_block": {
 			block:   big.NewInt(1000000000),
 			want:    nil,
-			wantErr: ethereum.NotFound,
+			wantErr: drillum.NotFound,
 		},
 	}
 	for name, tt := range tests {
@@ -404,13 +404,13 @@ func testTransactionInBlockInterrupted(t *testing.T, client *rpc.Client) {
 	if tx != nil {
 		t.Fatal("transaction should be nil")
 	}
-	if err == nil || err == ethereum.NotFound {
+	if err == nil || err == drillum.NotFound {
 		t.Fatal("error should not be nil/notfound")
 	}
 
 	// Test tx in block not found.
-	if _, err := ec.TransactionInBlock(context.Background(), block.Hash(), 20); err != ethereum.NotFound {
-		t.Fatal("error should be ethereum.NotFound")
+	if _, err := ec.TransactionInBlock(context.Background(), block.Hash(), 20); err != drillum.NotFound {
+		t.Fatal("error should be drillum.NotFound")
 	}
 }
 
@@ -514,7 +514,7 @@ func testStatusFunctions(t *testing.T, client *rpc.Client) {
 	if err != nil {
 		t.Fatalf("unexpected error: %v", err)
 	}
-	want := &ethereum.FeeHistory{
+	want := &drillum.FeeHistory{
 		OldestBlock: big.NewInt(2),
 		Reward: [][]*big.Int{
 			{
@@ -537,7 +537,7 @@ func testCallContractAtHash(t *testing.T, client *rpc.Client) {
 	ec := NewClient(client)
 
 	// EstimateGas
-	msg := ethereum.CallMsg{
+	msg := drillum.CallMsg{
 		From:  testAddr,
 		To:    &common.Address{},
 		Gas:   21000,
@@ -564,7 +564,7 @@ func testCallContract(t *testing.T, client *rpc.Client) {
 	ec := NewClient(client)
 
 	// EstimateGas
-	msg := ethereum.CallMsg{
+	msg := drillum.CallMsg{
 		From:  testAddr,
 		To:    &common.Address{},
 		Gas:   21000,

@@ -1,4 +1,4 @@
-module github.com/ethereum/go-ethereum
+module github.com/drillum-network/go-drillum
 
 go 1.17
 

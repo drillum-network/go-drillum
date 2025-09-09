@@ -1,18 +1,18 @@
-// Copyright 2021 The go-ethereum Authors
-// This file is part of go-ethereum.
+// Copyright 2021 The go-drillum Authors
+// This file is part of go-drillum.
 //
-// go-ethereum is free software: you can redistribute it and/or modify
+// go-drillum is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
 // the Free Software Foundation, either version 3 of the License, or
 // (at your option) any later version.
 //
-// go-ethereum is distributed in the hope that it will be useful,
+// go-drillum is distributed in the hope that it will be useful,
 // but WITHOUT ANY WARRANTY; without even the implied warranty of
 // MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
 // GNU General Public License for more details.
 //
 // You should have received a copy of the GNU General Public License
-// along with go-ethereum. If not, see <http://www.gnu.org/licenses/>.
+// along with go-drillum. If not, see <http://www.gnu.org/licenses/>.
 
 package t8ntool
 
@@ -24,15 +24,15 @@ import (
 	"math/big"
 	"os"
 
-	"github.com/ethereum/go-ethereum/common"
-	"github.com/ethereum/go-ethereum/common/hexutil"
-	"github.com/ethereum/go-ethereum/common/math"
-	"github.com/ethereum/go-ethereum/consensus/clique"
-	"github.com/ethereum/go-ethereum/consensus/ethash"
-	"github.com/ethereum/go-ethereum/core/types"
-	"github.com/ethereum/go-ethereum/crypto"
-	"github.com/ethereum/go-ethereum/log"
-	"github.com/ethereum/go-ethereum/rlp"
+	"github.com/drillum-network/go-drillum/common"
+	"github.com/drillum-network/go-drillum/common/hexutil"
+	"github.com/drillum-network/go-drillum/common/math"
+	"github.com/drillum-network/go-drillum/consensus/clique"
+	"github.com/drillum-network/go-drillum/consensus/ethash"
+	"github.com/drillum-network/go-drillum/core/types"
+	"github.com/drillum-network/go-drillum/crypto"
+	"github.com/drillum-network/go-drillum/log"
+	"github.com/drillum-network/go-drillum/rlp"
 	"github.com/urfave/cli/v2"
 )
 
@@ -236,7 +236,7 @@ func (i *bbInput) sealClique(block *types.Block) (*types.Block, error) {
 
 // BuildBlock constructs a block from the given inputs.
 func BuildBlock(ctx *cli.Context) error {
-	// Configure the go-ethereum logger
+	// Configure the go-drillum logger
 	glogger := log.NewGlogHandler(log.StreamHandler(os.Stderr, log.TerminalFormat(false)))
 	glogger.Verbosity(log.Lvl(ctx.Int(VerbosityFlag.Name)))
 	log.Root().SetHandler(glogger)

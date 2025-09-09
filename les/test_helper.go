@@ -1,18 +1,18 @@
-// Copyright 2019 The go-ethereum Authors
-// This file is part of the go-ethereum library.
+// Copyright 2019 The go-drillum Authors
+// This file is part of the go-drillum library.
 //
-// The go-ethereum library is free software: you can redistribute it and/or modify
+// The go-drillum library is free software: you can redistribute it and/or modify
 // it under the terms of the GNU Lesser General Public License as published by
 // the Free Software Foundation, either version 3 of the License, or
 // (at your option) any later version.
 //
-// The go-ethereum library is distributed in the hope that it will be useful,
+// The go-drillum library is distributed in the hope that it will be useful,
 // but WITHOUT ANY WARRANTY; without even the implied warranty of
 // MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
 // GNU Lesser General Public License for more details.
 //
 // You should have received a copy of the GNU Lesser General Public License
-// along with the go-ethereum library. If not, see <http://www.gnu.org/licenses/>.
+// along with the go-drillum library. If not, see <http://www.gnu.org/licenses/>.
 
 // This file contains some shares testing functionality, common to multiple
 // different files and modules being tested. Client based network and Server
@@ -29,28 +29,28 @@ import (
 	"testing"
 	"time"
 
-	"github.com/ethereum/go-ethereum/accounts/abi/bind"
-	"github.com/ethereum/go-ethereum/accounts/abi/bind/backends"
-	"github.com/ethereum/go-ethereum/common"
-	"github.com/ethereum/go-ethereum/common/mclock"
-	"github.com/ethereum/go-ethereum/consensus"
-	"github.com/ethereum/go-ethereum/consensus/ethash"
-	"github.com/ethereum/go-ethereum/contracts/checkpointoracle/contract"
-	"github.com/ethereum/go-ethereum/core"
-	"github.com/ethereum/go-ethereum/core/forkid"
-	"github.com/ethereum/go-ethereum/core/rawdb"
-	"github.com/ethereum/go-ethereum/core/types"
-	"github.com/ethereum/go-ethereum/crypto"
-	"github.com/ethereum/go-ethereum/eth/ethconfig"
-	"github.com/ethereum/go-ethereum/ethdb"
-	"github.com/ethereum/go-ethereum/event"
-	"github.com/ethereum/go-ethereum/les/checkpointoracle"
-	"github.com/ethereum/go-ethereum/les/flowcontrol"
-	vfs "github.com/ethereum/go-ethereum/les/vflux/server"
-	"github.com/ethereum/go-ethereum/light"
-	"github.com/ethereum/go-ethereum/p2p"
-	"github.com/ethereum/go-ethereum/p2p/enode"
-	"github.com/ethereum/go-ethereum/params"
+	"github.com/drillum-network/go-drillum/accounts/abi/bind"
+	"github.com/drillum-network/go-drillum/accounts/abi/bind/backends"
+	"github.com/drillum-network/go-drillum/common"
+	"github.com/drillum-network/go-drillum/common/mclock"
+	"github.com/drillum-network/go-drillum/consensus"
+	"github.com/drillum-network/go-drillum/consensus/ethash"
+	"github.com/drillum-network/go-drillum/contracts/checkpointoracle/contract"
+	"github.com/drillum-network/go-drillum/core"
+	"github.com/drillum-network/go-drillum/core/forkid"
+	"github.com/drillum-network/go-drillum/core/rawdb"
+	"github.com/drillum-network/go-drillum/core/types"
+	"github.com/drillum-network/go-drillum/crypto"
+	"github.com/drillum-network/go-drillum/eth/ethconfig"
+	"github.com/drillum-network/go-drillum/ethdb"
+	"github.com/drillum-network/go-drillum/event"
+	"github.com/drillum-network/go-drillum/les/checkpointoracle"
+	"github.com/drillum-network/go-drillum/les/flowcontrol"
+	vfs "github.com/drillum-network/go-drillum/les/vflux/server"
+	"github.com/drillum-network/go-drillum/light"
+	"github.com/drillum-network/go-drillum/p2p"
+	"github.com/drillum-network/go-drillum/p2p/enode"
+	"github.com/drillum-network/go-drillum/params"
 )
 
 var (
@@ -122,7 +122,7 @@ func prepare(n int, backend *backends.SimulatedBackend) {
 			auth, _ := bind.NewKeyedTransactorWithChainID(bankKey, big.NewInt(1337))
 			oracleAddr, _, _, _ = contract.DeployCheckpointOracle(auth, backend, []common.Address{signerAddr}, sectionSize, processConfirms, big.NewInt(1))
 
-			// bankUser transfers some ether to user1
+			// bankUser transfers some drill to user1
 			nonce, _ := backend.PendingNonceAt(ctx, bankAddr)
 			tx, _ := types.SignTx(types.NewTransaction(nonce, userAddr1, big.NewInt(10_000_000_000_000_000), params.TxGas, big.NewInt(params.InitialBaseFee), nil), signer, bankKey)
 			backend.SendTransaction(ctx, tx)
@@ -134,11 +134,11 @@ func prepare(n int, backend *backends.SimulatedBackend) {
 			bankNonce, _ := backend.PendingNonceAt(ctx, bankAddr)
 			userNonce1, _ := backend.PendingNonceAt(ctx, userAddr1)
 
-			// bankUser transfers more ether to user1
+			// bankUser transfers more drill to user1
 			tx1, _ := types.SignTx(types.NewTransaction(bankNonce, userAddr1, big.NewInt(1_000_000_000_000_000), params.TxGas, big.NewInt(params.InitialBaseFee), nil), signer, bankKey)
 			backend.SendTransaction(ctx, tx1)
 
-			// user1 relays ether to user2
+			// user1 relays drill to user2
 			tx2, _ := types.SignTx(types.NewTransaction(userNonce1, userAddr2, big.NewInt(1_000_000_000_000_000), params.TxGas, big.NewInt(params.InitialBaseFee), nil), signer, userKey1)
 			backend.SendTransaction(ctx, tx2)
 
@@ -155,7 +155,7 @@ func prepare(n int, backend *backends.SimulatedBackend) {
 			//    number: 3
 			//    txs:    2
 
-			// bankUser transfer some ether to signer
+			// bankUser transfer some drill to signer
 			bankNonce, _ := backend.PendingNonceAt(ctx, bankAddr)
 			tx1, _ := types.SignTx(types.NewTransaction(bankNonce, signerAddr, big.NewInt(1000000000), params.TxGas, big.NewInt(params.InitialBaseFee), nil), signer, bankKey)
 			backend.SendTransaction(ctx, tx1)
@@ -222,7 +222,7 @@ func newTestClientHandler(backend *backends.SimulatedBackend, odr *LesOdr, index
 		}
 		oracle = checkpointoracle.New(checkpointConfig, getLocal)
 	}
-	client := &LightEthereum{
+	client := &LightDrillum{
 		lesCommons: lesCommons{
 			genesis:     genesis.Hash(),
 			config:      &ethconfig.Config{LightPeers: 100, NetworkId: NetworkId},

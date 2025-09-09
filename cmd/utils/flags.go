@@ -1,20 +1,20 @@
-// Copyright 2015 The go-ethereum Authors
-// This file is part of go-ethereum.
+// Copyright 2015 The go-drillum Authors
+// This file is part of go-drillum.
 //
-// go-ethereum is free software: you can redistribute it and/or modify
+// go-drillum is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
 // the Free Software Foundation, either version 3 of the License, or
 // (at your option) any later version.
 //
-// go-ethereum is distributed in the hope that it will be useful,
+// go-drillum is distributed in the hope that it will be useful,
 // but WITHOUT ANY WARRANTY; without even the implied warranty of
 // MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
 // GNU General Public License for more details.
 //
 // You should have received a copy of the GNU General Public License
-// along with go-ethereum. If not, see <http://www.gnu.org/licenses/>.
+// along with go-drillum. If not, see <http://www.gnu.org/licenses/>.
 
-// Package utils contains internal helper functions for go-ethereum commands.
+// Package utils contains internal helper functions for go-drillum commands.
 package utils
 
 import (
@@ -29,43 +29,43 @@ import (
 	"strings"
 	"time"
 
-	"github.com/ethereum/go-ethereum/accounts"
-	"github.com/ethereum/go-ethereum/accounts/keystore"
-	"github.com/ethereum/go-ethereum/common"
-	"github.com/ethereum/go-ethereum/common/fdlimit"
-	"github.com/ethereum/go-ethereum/consensus"
-	"github.com/ethereum/go-ethereum/consensus/ethash"
-	"github.com/ethereum/go-ethereum/core"
-	"github.com/ethereum/go-ethereum/core/rawdb"
-	"github.com/ethereum/go-ethereum/core/vm"
-	"github.com/ethereum/go-ethereum/crypto"
-	"github.com/ethereum/go-ethereum/eth"
-	ethcatalyst "github.com/ethereum/go-ethereum/eth/catalyst"
-	"github.com/ethereum/go-ethereum/eth/downloader"
-	"github.com/ethereum/go-ethereum/eth/ethconfig"
-	"github.com/ethereum/go-ethereum/eth/filters"
-	"github.com/ethereum/go-ethereum/eth/gasprice"
-	"github.com/ethereum/go-ethereum/eth/tracers"
-	"github.com/ethereum/go-ethereum/ethdb"
-	"github.com/ethereum/go-ethereum/ethdb/remotedb"
-	"github.com/ethereum/go-ethereum/ethstats"
-	"github.com/ethereum/go-ethereum/graphql"
-	"github.com/ethereum/go-ethereum/internal/ethapi"
-	"github.com/ethereum/go-ethereum/internal/flags"
-	"github.com/ethereum/go-ethereum/les"
-	lescatalyst "github.com/ethereum/go-ethereum/les/catalyst"
-	"github.com/ethereum/go-ethereum/log"
-	"github.com/ethereum/go-ethereum/metrics"
-	"github.com/ethereum/go-ethereum/metrics/exp"
-	"github.com/ethereum/go-ethereum/metrics/influxdb"
-	"github.com/ethereum/go-ethereum/miner"
-	"github.com/ethereum/go-ethereum/node"
-	"github.com/ethereum/go-ethereum/p2p"
-	"github.com/ethereum/go-ethereum/p2p/enode"
-	"github.com/ethereum/go-ethereum/p2p/nat"
-	"github.com/ethereum/go-ethereum/p2p/netutil"
-	"github.com/ethereum/go-ethereum/params"
-	"github.com/ethereum/go-ethereum/rpc"
+	"github.com/drillum-network/go-drillum/accounts"
+	"github.com/drillum-network/go-drillum/accounts/keystore"
+	"github.com/drillum-network/go-drillum/common"
+	"github.com/drillum-network/go-drillum/common/fdlimit"
+	"github.com/drillum-network/go-drillum/consensus"
+	"github.com/drillum-network/go-drillum/consensus/ethash"
+	"github.com/drillum-network/go-drillum/core"
+	"github.com/drillum-network/go-drillum/core/rawdb"
+	"github.com/drillum-network/go-drillum/core/vm"
+	"github.com/drillum-network/go-drillum/crypto"
+	"github.com/drillum-network/go-drillum/eth"
+	ethcatalyst "github.com/drillum-network/go-drillum/eth/catalyst"
+	"github.com/drillum-network/go-drillum/eth/downloader"
+	"github.com/drillum-network/go-drillum/eth/ethconfig"
+	"github.com/drillum-network/go-drillum/eth/filters"
+	"github.com/drillum-network/go-drillum/eth/gasprice"
+	"github.com/drillum-network/go-drillum/eth/tracers"
+	"github.com/drillum-network/go-drillum/ethdb"
+	"github.com/drillum-network/go-drillum/ethdb/remotedb"
+	"github.com/drillum-network/go-drillum/ethstats"
+	"github.com/drillum-network/go-drillum/graphql"
+	"github.com/drillum-network/go-drillum/internal/ethapi"
+	"github.com/drillum-network/go-drillum/internal/flags"
+	"github.com/drillum-network/go-drillum/les"
+	lescatalyst "github.com/drillum-network/go-drillum/les/catalyst"
+	"github.com/drillum-network/go-drillum/log"
+	"github.com/drillum-network/go-drillum/metrics"
+	"github.com/drillum-network/go-drillum/metrics/exp"
+	"github.com/drillum-network/go-drillum/metrics/influxdb"
+	"github.com/drillum-network/go-drillum/miner"
+	"github.com/drillum-network/go-drillum/node"
+	"github.com/drillum-network/go-drillum/p2p"
+	"github.com/drillum-network/go-drillum/p2p/enode"
+	"github.com/drillum-network/go-drillum/p2p/nat"
+	"github.com/drillum-network/go-drillum/p2p/netutil"
+	"github.com/drillum-network/go-drillum/params"
+	"github.com/drillum-network/go-drillum/rpc"
 	pcsclite "github.com/gballet/go-libpcsclite"
 	gopsutil "github.com/shirou/gopsutil/mem"
 	"github.com/urfave/cli/v2"
@@ -125,7 +125,7 @@ var (
 	}
 	MainnetFlag = &cli.BoolFlag{
 		Name:     "mainnet",
-		Usage:    "Ethereum mainnet",
+		Usage:    "Drillum mainnet",
 		Category: flags.EthCategory,
 	}
 	RopstenFlag = &cli.BoolFlag{
@@ -609,7 +609,7 @@ var (
 	}
 	RPCGlobalTxFeeCapFlag = &cli.Float64Flag{
 		Name:     "rpc.txfeecap",
-		Usage:    "Sets a cap on transaction fee (in ether) that can be sent via the RPC APIs (0 = no cap)",
+		Usage:    "Sets a cap on transaction fee (in drill) that can be sent via the RPC APIs (0 = no cap)",
 		Value:    ethconfig.Defaults.RPCTxFeeCap,
 		Category: flags.APICategory,
 	}
@@ -657,7 +657,7 @@ var (
 
 	IgnoreLegacyReceiptsFlag = &cli.BoolFlag{
 		Name:     "ignore-legacy-receipts",
-		Usage:    "Geth will start up even if there are legacy receipts in freezer",
+		Usage:    "Gdrill will start up even if there are legacy receipts in freezer",
 		Category: flags.MiscCategory,
 	}
 
@@ -1007,7 +1007,7 @@ var (
 func MakeDataDir(ctx *cli.Context) string {
 	if path := ctx.String(DataDirFlag.Name); path != "" {
 		if ctx.Bool(RopstenFlag.Name) {
-			// Maintain compatibility with older Geth configurations storing the
+			// Maintain compatibility with older Gdrill configurations storing the
 			// Ropsten database in `testnet` instead of `ropsten`.
 			return filepath.Join(path, "ropsten")
 		}
@@ -1288,7 +1288,7 @@ func setLes(ctx *cli.Context, cfg *ethconfig.Config) {
 }
 
 // MakeDatabaseHandles raises out the number of allowed file handles per process
-// for Geth and returns half of the allowance to assign to the database.
+// for Gdrill and returns half of the allowance to assign to the database.
 func MakeDatabaseHandles(max int) int {
 	limit, err := fdlimit.Maximum()
 	if err != nil {
@@ -1329,7 +1329,7 @@ func MakeAddress(ks *keystore.KeyStore, account string) (accounts.Account, error
 	log.Warn("-------------------------------------------------------------------")
 	log.Warn("Referring to accounts by order in the keystore folder is dangerous!")
 	log.Warn("This functionality is deprecated and will be removed in the future!")
-	log.Warn("Please use explicit addresses! (can search via `geth account list`)")
+	log.Warn("Please use explicit addresses! (can search via `gdrill account list`)")
 	log.Warn("-------------------------------------------------------------------")
 
 	accs := ks.Accounts()
@@ -1518,7 +1518,7 @@ func SetDataDir(ctx *cli.Context, cfg *node.Config) {
 	case ctx.Bool(DeveloperFlag.Name):
 		cfg.DataDir = "" // unless explicitly requested, use memory databases
 	case ctx.Bool(RopstenFlag.Name) && cfg.DataDir == node.DefaultDataDir():
-		// Maintain compatibility with older Geth configurations storing the
+		// Maintain compatibility with older Gdrill configurations storing the
 		// Ropsten database in `testnet` instead of `ropsten`.
 		legacyPath := filepath.Join(node.DefaultDataDir(), "testnet")
 		if common.FileExist(legacyPath) {
@@ -1984,14 +1984,14 @@ func SetDNSDiscoveryDefaults(cfg *ethconfig.Config, genesis common.Hash) {
 	}
 }
 
-// RegisterEthService adds an Ethereum client to the stack.
+// RegisterEthService adds an Drillum client to the stack.
 // The second return value is the full node instance, which may be nil if the
 // node is running as a light client.
-func RegisterEthService(stack *node.Node, cfg *ethconfig.Config) (ethapi.Backend, *eth.Ethereum) {
+func RegisterEthService(stack *node.Node, cfg *ethconfig.Config) (ethapi.Backend, *eth.Drillum) {
 	if cfg.SyncMode == downloader.LightSync {
 		backend, err := les.New(stack, cfg)
 		if err != nil {
-			Fatalf("Failed to register the Ethereum service: %v", err)
+			Fatalf("Failed to register the Drillum service: %v", err)
 		}
 		stack.RegisterAPIs(tracers.APIs(backend.ApiBackend))
 		if err := lescatalyst.Register(stack, backend); err != nil {
@@ -2001,7 +2001,7 @@ func RegisterEthService(stack *node.Node, cfg *ethconfig.Config) (ethapi.Backend
 	}
 	backend, err := eth.New(stack, cfg)
 	if err != nil {
-		Fatalf("Failed to register the Ethereum service: %v", err)
+		Fatalf("Failed to register the Drillum service: %v", err)
 	}
 	if cfg.LightServ > 0 {
 		_, err := les.NewLesServer(stack, backend, cfg)
@@ -2016,10 +2016,10 @@ func RegisterEthService(stack *node.Node, cfg *ethconfig.Config) (ethapi.Backend
 	return backend.APIBackend, backend
 }
 
-// RegisterEthStatsService configures the Ethereum Stats daemon and adds it to the node.
+// RegisterEthStatsService configures the Drillum Stats daemon and adds it to the node.
 func RegisterEthStatsService(stack *node.Node, backend ethapi.Backend, url string) {
 	if err := ethstats.New(stack, backend, backend.Engine(), url); err != nil {
-		Fatalf("Failed to register the Ethereum Stats service: %v", err)
+		Fatalf("Failed to register the Drillum Stats service: %v", err)
 	}
 }
 
@@ -2086,13 +2086,13 @@ func SetupMetrics(ctx *cli.Context) {
 
 			log.Info("Enabling metrics export to InfluxDB")
 
-			go influxdb.InfluxDBWithTags(metrics.DefaultRegistry, 10*time.Second, endpoint, database, username, password, "geth.", tagsMap)
+			go influxdb.InfluxDBWithTags(metrics.DefaultRegistry, 10*time.Second, endpoint, database, username, password, "gdrill.", tagsMap)
 		} else if enableExportV2 {
 			tagsMap := SplitTagsFlag(ctx.String(MetricsInfluxDBTagsFlag.Name))
 
 			log.Info("Enabling metrics export to InfluxDB (v2)")
 
-			go influxdb.InfluxDBV2WithTags(metrics.DefaultRegistry, 10*time.Second, endpoint, token, bucket, organization, "geth.", tagsMap)
+			go influxdb.InfluxDBV2WithTags(metrics.DefaultRegistry, 10*time.Second, endpoint, token, bucket, organization, "gdrill.", tagsMap)
 		}
 
 		if ctx.IsSet(MetricsHTTPFlag.Name) {

@@ -1,18 +1,18 @@
-// Copyright 2016 The go-ethereum Authors
-// This file is part of the go-ethereum library.
+// Copyright 2016 The go-drillum Authors
+// This file is part of the go-drillum library.
 //
-// The go-ethereum library is free software: you can redistribute it and/or modify
+// The go-drillum library is free software: you can redistribute it and/or modify
 // it under the terms of the GNU Lesser General Public License as published by
 // the Free Software Foundation, either version 3 of the License, or
 // (at your option) any later version.
 //
-// The go-ethereum library is distributed in the hope that it will be useful,
+// The go-drillum library is distributed in the hope that it will be useful,
 // but WITHOUT ANY WARRANTY; without even the implied warranty of
 // MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
 // GNU Lesser General Public License for more details.
 //
 // You should have received a copy of the GNU Lesser General Public License
-// along with the go-ethereum library. If not, see <http://www.gnu.org/licenses/>.
+// along with the go-drillum library. If not, see <http://www.gnu.org/licenses/>.
 
 package trie
 
@@ -20,8 +20,8 @@ import (
 	"bytes"
 	"testing"
 
-	"github.com/ethereum/go-ethereum/crypto"
-	"github.com/ethereum/go-ethereum/rlp"
+	"github.com/drillum-network/go-drillum/crypto"
+	"github.com/drillum-network/go-drillum/rlp"
 )
 
 func newTestFullNode(v []byte) []interface{} {
@@ -96,7 +96,7 @@ func TestDecodeFullNode(t *testing.T) {
 
 // goos: darwin
 // goarch: arm64
-// pkg: github.com/ethereum/go-ethereum/trie
+// pkg: github.com/drillum-network/go-drillum/trie
 // BenchmarkEncodeShortNode
 // BenchmarkEncodeShortNode-8   	16878850	        70.81 ns/op	      48 B/op	       1 allocs/op
 func BenchmarkEncodeShortNode(b *testing.B) {
@@ -114,7 +114,7 @@ func BenchmarkEncodeShortNode(b *testing.B) {
 
 // goos: darwin
 // goarch: arm64
-// pkg: github.com/ethereum/go-ethereum/trie
+// pkg: github.com/drillum-network/go-drillum/trie
 // BenchmarkEncodeFullNode
 // BenchmarkEncodeFullNode-8   	 4323273	       284.4 ns/op	     576 B/op	       1 allocs/op
 func BenchmarkEncodeFullNode(b *testing.B) {
@@ -132,7 +132,7 @@ func BenchmarkEncodeFullNode(b *testing.B) {
 
 // goos: darwin
 // goarch: arm64
-// pkg: github.com/ethereum/go-ethereum/trie
+// pkg: github.com/drillum-network/go-drillum/trie
 // BenchmarkDecodeShortNode
 // BenchmarkDecodeShortNode-8   	 7925638	       151.0 ns/op	     157 B/op	       4 allocs/op
 func BenchmarkDecodeShortNode(b *testing.B) {
@@ -153,7 +153,7 @@ func BenchmarkDecodeShortNode(b *testing.B) {
 
 // goos: darwin
 // goarch: arm64
-// pkg: github.com/ethereum/go-ethereum/trie
+// pkg: github.com/drillum-network/go-drillum/trie
 // BenchmarkDecodeShortNodeUnsafe
 // BenchmarkDecodeShortNodeUnsafe-8   	 9027476	       128.6 ns/op	     109 B/op	       3 allocs/op
 func BenchmarkDecodeShortNodeUnsafe(b *testing.B) {
@@ -174,7 +174,7 @@ func BenchmarkDecodeShortNodeUnsafe(b *testing.B) {
 
 // goos: darwin
 // goarch: arm64
-// pkg: github.com/ethereum/go-ethereum/trie
+// pkg: github.com/drillum-network/go-drillum/trie
 // BenchmarkDecodeFullNode
 // BenchmarkDecodeFullNode-8   	 1597462	       761.9 ns/op	    1280 B/op	      18 allocs/op
 func BenchmarkDecodeFullNode(b *testing.B) {
@@ -195,7 +195,7 @@ func BenchmarkDecodeFullNode(b *testing.B) {
 
 // goos: darwin
 // goarch: arm64
-// pkg: github.com/ethereum/go-ethereum/trie
+// pkg: github.com/drillum-network/go-drillum/trie
 // BenchmarkDecodeFullNodeUnsafe
 // BenchmarkDecodeFullNodeUnsafe-8   	 1789070	       687.1 ns/op	     704 B/op	      17 allocs/op
 func BenchmarkDecodeFullNodeUnsafe(b *testing.B) {

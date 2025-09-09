@@ -1,18 +1,18 @@
-// Copyright 2019 The go-ethereum Authors
-// This file is part of the go-ethereum library.
+// Copyright 2019 The go-drillum Authors
+// This file is part of the go-drillum library.
 //
-// The go-ethereum library is free software: you can redistribute it and/or modify
+// The go-drillum library is free software: you can redistribute it and/or modify
 // it under the terms of the GNU Lesser General Public License as published by
 // the Free Software Foundation, either version 3 of the License, or
 // (at your option) any later version.
 //
-// The go-ethereum library is distributed in the hope that it will be useful,
+// The go-drillum library is distributed in the hope that it will be useful,
 // but WITHOUT ANY WARRANTY; without even the implied warranty of
 // MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
 // GNU Lesser General Public License for more details.
 //
 // You should have received a copy of the GNU Lesser General Public License
-// along with the go-ethereum library. If not, see <http://www.gnu.org/licenses/>.
+// along with the go-drillum library. If not, see <http://www.gnu.org/licenses/>.
 
 package snapshot
 
@@ -25,12 +25,12 @@ import (
 	"time"
 
 	"github.com/VictoriaMetrics/fastcache"
-	"github.com/ethereum/go-ethereum/common"
-	"github.com/ethereum/go-ethereum/core/rawdb"
-	"github.com/ethereum/go-ethereum/ethdb"
-	"github.com/ethereum/go-ethereum/log"
-	"github.com/ethereum/go-ethereum/rlp"
-	"github.com/ethereum/go-ethereum/trie"
+	"github.com/drillum-network/go-drillum/common"
+	"github.com/drillum-network/go-drillum/core/rawdb"
+	"github.com/drillum-network/go-drillum/ethdb"
+	"github.com/drillum-network/go-drillum/log"
+	"github.com/drillum-network/go-drillum/rlp"
+	"github.com/drillum-network/go-drillum/trie"
 )
 
 const journalVersion uint64 = 0
@@ -103,7 +103,7 @@ func loadAndParseJournal(db ethdb.KeyValueStore, base *diskLayer) (snapshot, jou
 		return nil, journalGenerator{}, fmt.Errorf("failed to decode snapshot generator: %v", err)
 	}
 	// Retrieve the diff layer journal. It's possible that the journal is
-	// not existent, e.g. the disk layer is generating while that the Geth
+	// not existent, e.g. the disk layer is generating while that the Gdrill
 	// crashes without persisting the diff journal.
 	// So if there is no journal, or the journal is invalid(e.g. the journal
 	// is not matched with disk layer; or the it's the legacy-format journal,
@@ -147,7 +147,7 @@ func loadSnapshot(diskdb ethdb.KeyValueStore, triedb *trie.Database, cache int, 
 	// snapshot is not matched with current state root, print a warning log
 	// or discard the entire snapshot it's legacy snapshot.
 	//
-	// Possible scenario: Geth was crashed without persisting journal and then
+	// Possible scenario: Gdrill was crashed without persisting journal and then
 	// restart, the head is rewound to the point with available state(trie)
 	// which is below the snapshot. In this case the snapshot can be recovered
 	// by re-executing blocks but right now it's unavailable.
